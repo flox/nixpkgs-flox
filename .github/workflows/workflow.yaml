@@ -1,0 +1,61 @@
+name: "Create built versions cache"
+
+on:
+  workflow_call:
+    inputs:
+      stability:
+        required: true
+        type: string
+      system:
+        required: true
+        type: string
+    secrets:
+      AWS_ACCESS_KEY_ID:
+        required: true
+      AWS_SECRET_ACCESS_KEY:
+        required: true
+
+jobs:
+  eval_cache:
+    runs-on: ubuntu-latest
+    steps:
+       - uses: actions/checkout@v2.4.0
+       - uses: cachix/install-nix-action@v15
+         with:
+           extra_nix_config: |
+             access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
+       - uses: keithweaver/aws-s3-github-action@v1.0.0
+         name: copy cachedb from s3
+         with:
+           command: cp
+           source: s3://versions-cache/${{inputs.stability}}.${{inputs.system}}.db
+           destination: ./${{inputs.stability}}.${{inputs.system}}.db
+           aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+           aws_region: us-east-1
+       - name: db permissions
+         run: |
+           sudo chown runner ${{inputs.stability}}.${{inputs.system}}.db
+           sudo chmod 664 ${{inputs.stability}}.${{inputs.system}}.db
+       - name: Eval linux
+         run: nix run .#eval github:flox/nixpkgs/${{ inputs.stability }}#legacyPackages.${{inputs.system}}
+       - name: Build cache linux
+         run: nix run .#checkCache github_flox_nixpkgs-staging_${{ inputs.stability}}#legacyPackages.${{inputs.system}}.json ${{ inputs.stability }}.${{inputs.system}}.db
+       - uses: keithweaver/aws-s3-github-action@v1.0.0
+         name: copy update cachedb overwrite back to s3
+         with:
+           command: cp
+           source: ./${{ inputs.stability }}.${{inputs.system}}.db
+           destination: s3://versions-cache/${{ inputs.stability }}.${{inputs.system}}.db
+           aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+           aws_region: us-east-1
+       - uses: keithweaver/aws-s3-github-action@v1.0.0
+         name: copy update cachedb overwrite back to s3
+         with:
+           command: cp
+           source: ./nixpkgs/github_flox_nixpkgs-staging_${{ inputs.stability}}#legacyPackages.${{inputs.system}}.json
+           destination: s3://versions-cache/github_flox_nixpkgs-staging_${{ inputs.stability}}#legacyPackages.${{inputs.system}}.json
+           aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+           aws_region: us-east-1

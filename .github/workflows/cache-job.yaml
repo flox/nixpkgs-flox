@@ -1,0 +1,16 @@
+name: "Create built versions cache"
+on:
+  pull_request:
+  push:
+  schedule:
+    - cron: '15 * * * *'
+
+jobs:
+  stable_x86_64-linux:
+    uses: ./.github/workflows/workflow.yaml
+    with:
+      stability: staging
+      system: x86_64-linux
+    secrets:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
