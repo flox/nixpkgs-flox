@@ -3,7 +3,7 @@ on:
   pull_request:
   push:
   schedule:
-    - cron: '15 * * * *'
+    - cron: '15 5 * * *'
 
 jobs:
   stable_x86_64-linux:
