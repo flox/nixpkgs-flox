@@ -21,19 +21,7 @@ jobs:
   eval_cache:
     runs-on: ubuntu-latest
     concurrency: ${{ github.ref}}-${{ inputs.stability }}-${{ inputs.system}}
-    container:
-      image: nixos/nix
-      env:
-        NIX_CONFIG: |
-          experimental-features = nix-command flakes
-          access-tokens = ${{ secrets.GIT_TOKEN }}
     steps:
-       - name: something
-         run: |
-           echo hello
-           nix --version
-           nix run nixpkgs#hello
-           exit 1
        - uses: actions/checkout@v2.4.0
        - name: Cache multiple paths
          uses: actions/cache@v3
@@ -41,11 +29,11 @@ jobs:
            path: |
              ~/.cache/nix
            key: ${{ runner.os }}-${{ hashFiles('flake.lock') }}
-       - name: test nix
-         run: |
-           nix --version
-           nix run nixpkgs#hello
-           exit 1
+       - uses: cachix/install-nix-action@v15
+         with:
+           extra_nix_config: |
+             access-tokens = ${{ secrets.GIT_TOKEN }}
+             experimental-features = nix-command flakes
        - uses: keithweaver/aws-s3-github-action@v1.0.0
          name: copy cachedb from s3
          with:
