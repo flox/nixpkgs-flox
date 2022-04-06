@@ -52,7 +52,7 @@ jobs:
        - name: Eval linux
          run: nix run .#eval github:flox/nixpkgs/${{ inputs.stability }}#legacyPackages.${{inputs.system}}
        - name: Build cache linux
-         run: nix run .#checkCache output/github_flox_nixpkgs-flox_${{ inputs.stability}}#legacyPackages.${{inputs.system}}.json ${{ inputs.stability }}.${{inputs.system}}.db
+         run: nix run .#checkCache output/github_flox_nixpkgs_${{ inputs.stability}}#legacyPackages.${{inputs.system}}.json ${{ inputs.stability }}.${{inputs.system}}.db
        - uses: keithweaver/aws-s3-github-action@v1.0.0
          name: copy update cachedb overwrite back to s3
          with:
