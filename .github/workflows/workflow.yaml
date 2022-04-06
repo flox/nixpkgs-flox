@@ -28,7 +28,9 @@ jobs:
          with:
            path: |
              ~/.cache/nix
-           key: ${{ runner.os }}-${{ hashFiles('flake.lock') }}
+           key: ${{ runner.os }}-${{ github.run_id}}
+           restore-keys: |
+             ${{ runner.os }}-
        - uses: cachix/install-nix-action@v15
          with:
            extra_nix_config: |
