@@ -1,0 +1,48 @@
+name: "Create built versions cache"
+
+on:
+  workflow_dispatch:
+    inputs:
+      system:
+        description: "Target system"
+        required: true
+        type: string
+        default: "x86_64-linux"
+      aws-bucket:
+        description: "AWS S3 Bucket"
+        required: true
+        type: string
+        default: "versions-cache"
+
+    # secrets:
+      # AWS_ACCESS_KEY_ID:
+      #   required: true
+      # AWS_SECRET_ACCESS_KEY:
+      #   required: true
+      # GIT_TOKEN:
+      #   required: false
+
+jobs:
+  eval_cache:
+    runs-on: ubuntu-latest
+    concurrency: ${{ github.ref}}
+    steps:
+      - uses: actions/checkout@v2.4.0
+
+      - name: Cache multiple paths
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cache/nix
+          key: ${{ runner.os }}-${{ github.run_id}}
+          restore-keys: |
+            ${{ runner.os }}-
+
+      - uses: flox/flox-integration-action@master
+        with:
+          system: ${{github.event.inputs.system}}
+          substituter: https://storehouse.beta.floxdev.com/project/flox-examples
+          aws-bucket: ${{github.event.inputs.aws-bucket}}
+          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          git_token: ${{ secrets.GIT_TOKEN }}
