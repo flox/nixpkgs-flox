@@ -1,14 +1,13 @@
 name: "Create built versions cache"
-
 on:
   workflow_dispatch:
     inputs:
-      system:
-        description: "Target system"
+      attr_path:
+        description: "Target attr_path"
         required: true
         type: string
-        default: "x86_64-linux"
-      aws-bucket:
+        default: "legacyPackages.x86_64-linux"
+      aws_bucket:
         description: "AWS S3 Bucket"
         required: true
         type: string
@@ -40,9 +39,9 @@ jobs:
 
       - uses: flox/flox-integration-action@master
         with:
-          system: ${{github.event.inputs.system}}
+          attr_path: ${{github.event.inputs.attr_path}}
           substituter: https://storehouse.beta.floxdev.com/project/flox-examples
-          aws-bucket: ${{github.event.inputs.aws-bucket}}
+          aws_bucket: ${{github.event.inputs.aws_bucket}}
           aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           git_token: ${{ secrets.GIT_TOKEN }}

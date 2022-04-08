@@ -6,11 +6,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1648854219,
-        "narHash": "sha256-WN6GugaLLFJm4IOjAJz0EczImoTgMjcHxF5osLC0K3s=",
+        "lastModified": 1649428628,
+        "narHash": "sha256-OqpiI4c9XbiaYmQN6I+9k3C8aIU+8hv4fnuCPUEmksQ=",
         "owner": "flox",
         "repo": "capacitor",
-        "rev": "2fb7c502cb3dfe0e92262083bd48afe8f9dcf023",
+        "rev": "0b978f9f46f78ac542edcafba03a07c8f48a8573",
         "type": "github"
       },
       "original": {
@@ -87,11 +87,11 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1647598144,
-        "narHash": "sha256-ulGq3W5XsrBMU/u5k9d4oPy65pQTkunR4HKKtTq0RwY=",
+        "lastModified": 1648652791,
+        "narHash": "sha256-u69opCeHUx3CsdIerD0wVSR+DjfDQjnztObqfk9Trqc=",
         "owner": "flox",
         "repo": "nixpkgs",
-        "rev": "d236aeb87f660cb2945dad63bcfdd2540eda1b53",
+        "rev": "5e1e954474fa927e5b29f1c9c9c2237b9165a9ae",
         "type": "github"
       },
       "original": {
