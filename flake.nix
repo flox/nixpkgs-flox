@@ -5,7 +5,7 @@
   outputs = {self, nixpkgs, capacitor}:
   let
     capacitor-apps = capacitor.lib.makeApps combined nixpkgs;
-    combined = nixpkgs.lib.recursiveUpdate {} capacitor-apps;
+    combined = nixpkgs.lib.recursiveUpdate nixpkgs capacitor-apps;
   in
     combined;
 }
