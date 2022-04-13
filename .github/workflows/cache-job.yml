@@ -1,0 +1,56 @@
+name: "Create built versions cache"
+on:
+  pull_request:
+  push:
+  schedule:
+    - cron: '15 * * * *'
+
+jobs:
+  unstable_x86_64-linux:
+    uses: ./.github/workflows/workflow.yaml
+    with:
+      flake_ref: github:flox/nixpkgs/unstable
+      attr_path: legacyPackages.x86_64-linux
+
+
+
+  stable_x86_64-linux:
+    uses: ./.github/workflows/workflow.yaml
+    with:
+      flake_ref: github:flox/nixpkgs/stable
+      attr_path: legacyPackages.x86_64-linux
+
+
+
+  staging_x86_64-linux:
+    uses: ./.github/workflows/workflow.yaml
+    with:
+      flake_ref: github:flox/nixpkgs/staging
+      attr_path: legacyPackages.x86_64-linux
+
+
+
+
+  unstable_aarch64-darwin:
+    uses: ./.github/workflows/workflow.yaml
+    with:
+      flake_ref: github:flox/nixpkgs/unstable
+      attr_path: legacyPackages.aarch64-darwin
+
+
+  stable_aarch64-darwin:
+    uses: ./.github/workflows/workflow.yaml
+    with:
+      flake_ref: github:flox/nixpkgs/stable
+      attr_path: legacyPackages.aarch64-darwin
+
+
+
+  staging_aarch64-darwin:
+    uses: ./.github/workflows/workflow.yaml
+    with:
+      flake_ref: github:flox/nixpkgs/staging
+      attr_path: legacyPackages.aarch64-darwin
+
+
+
