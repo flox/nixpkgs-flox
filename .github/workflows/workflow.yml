@@ -32,7 +32,7 @@ jobs:
           flake_ref: ${{inputs.flake_ref}}
           attr_path: ${{inputs.attr_path}}
           substituter: https://storehouse.beta.floxdev.com/project/flox-examples
-          aws_bucket: ${{github.event.inputs.aws_bucket}}
+          aws_bucket: ${{inputs.aws_bucket}}
           aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           git_token: ${{ secrets.GIT_TOKEN }}
