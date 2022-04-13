@@ -1,7 +1,13 @@
 name: "Create built versions cache"
 on:
-  workflow_dispatch:
+  pull_request:
+  push:
     inputs:
+      flake_ref:
+        description: "Target flakeref"
+        required: true
+        type: string
+        default: .
       attr_path:
         description: "Target attr_path"
         required: true
@@ -13,13 +19,6 @@ on:
         type: string
         default: "versions-cache"
 
-    # secrets:
-      # AWS_ACCESS_KEY_ID:
-      #   required: true
-      # AWS_SECRET_ACCESS_KEY:
-      #   required: true
-      # GIT_TOKEN:
-      #   required: false
 
 jobs:
   eval_cache:
@@ -28,14 +27,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2.4.0
 
-      - name: Cache multiple paths
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.cache/nix
-          key: ${{ runner.os }}-${{ github.run_id}}
-          restore-keys: |
-            ${{ runner.os }}-
 
       - uses: flox/flox-integration-action@master
         with:
@@ -44,4 +35,6 @@ jobs:
           aws_bucket: ${{github.event.inputs.aws_bucket}}
           aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          stability: unstable
+          system: x86_64-linux
           git_token: ${{ secrets.GIT_TOKEN }}
