@@ -1,7 +1,6 @@
 name: "Create built versions cache"
 on:
-  push:
-  pull_request:
+  workflow_call:
     inputs:
       flake_ref:
         description: "Target flakeref"
