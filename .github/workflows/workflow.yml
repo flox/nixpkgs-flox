@@ -17,8 +17,7 @@ on:
         required: false
         type: string
         default: "versions-cache"
-      secrets:
-        git_token: ${{ secrets.GIT_TOKEN }}
+      git_token: ${{ secrets.GIT_TOKEN }}
 
 jobs:
   eval_cache:
