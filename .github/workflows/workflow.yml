@@ -35,4 +35,5 @@ jobs:
           aws_bucket: ${{inputs.aws_bucket}}
           aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          git_token: ${{ secrets.GIT_TOKEN }}
+          secrets:
+            git_token: ${{ secrets.GIT_TOKEN }}
