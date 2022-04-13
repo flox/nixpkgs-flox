@@ -14,7 +14,7 @@ on:
         default: "legacyPackages.x86_64-linux"
       aws_bucket:
         description: "AWS S3 Bucket"
-        required: true
+        required: false
         type: string
         default: "versions-cache"
 
