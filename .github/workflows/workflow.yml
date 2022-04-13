@@ -17,7 +17,8 @@ on:
         required: false
         type: string
         default: "versions-cache"
-
+      secrets:
+        git_token: ${{ secrets.GIT_TOKEN }}
 
 jobs:
   eval_cache:
@@ -25,8 +26,6 @@ jobs:
     concurrency: ${{ github.ref}}
     steps:
       - uses: actions/checkout@v2.4.0
-
-
       - uses: flox/flox-integration-action@master
         with:
           flake_ref: ${{inputs.flake_ref}}
