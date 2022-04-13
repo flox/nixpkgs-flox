@@ -1,7 +1,6 @@
 name: "Create built versions cache"
 on:
-  pull_request:
-  push:
+  workflow_call:
     inputs:
       flake_ref:
         description: "Target flakeref"
@@ -30,11 +29,10 @@ jobs:
 
       - uses: flox/flox-integration-action@master
         with:
+          flake_ref: ${{inputs.flake_ref}}
           attr_path: ${{github.event.inputs.attr_path}}
           substituter: https://storehouse.beta.floxdev.com/project/flox-examples
           aws_bucket: ${{github.event.inputs.aws_bucket}}
           aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          stability: unstable
-          system: x86_64-linux
           git_token: ${{ secrets.GIT_TOKEN }}
