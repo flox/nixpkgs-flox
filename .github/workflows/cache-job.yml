@@ -7,7 +7,7 @@ on:
 
 jobs:
   unstable_x86_64-linux:
-    uses: ./.github/workflows/workflow.yaml
+    uses: ./.github/workflows/workflow.yml
     with:
       flake_ref: github:flox/nixpkgs/unstable
       attr_path: legacyPackages.x86_64-linux
@@ -15,7 +15,7 @@ jobs:
 
 
   stable_x86_64-linux:
-    uses: ./.github/workflows/workflow.yaml
+    uses: ./.github/workflows/workflow.yml
     with:
       flake_ref: github:flox/nixpkgs/stable
       attr_path: legacyPackages.x86_64-linux
@@ -23,7 +23,7 @@ jobs:
 
 
   staging_x86_64-linux:
-    uses: ./.github/workflows/workflow.yaml
+    uses: ./.github/workflows/workflow.yml
     with:
       flake_ref: github:flox/nixpkgs/staging
       attr_path: legacyPackages.x86_64-linux
@@ -32,14 +32,14 @@ jobs:
 
 
   unstable_aarch64-darwin:
-    uses: ./.github/workflows/workflow.yaml
+    uses: ./.github/workflows/workflow.yml
     with:
       flake_ref: github:flox/nixpkgs/unstable
       attr_path: legacyPackages.aarch64-darwin
 
 
   stable_aarch64-darwin:
-    uses: ./.github/workflows/workflow.yaml
+    uses: ./.github/workflows/workflow.yml
     with:
       flake_ref: github:flox/nixpkgs/stable
       attr_path: legacyPackages.aarch64-darwin
@@ -47,7 +47,7 @@ jobs:
 
 
   staging_aarch64-darwin:
-    uses: ./.github/workflows/workflow.yaml
+    uses: ./.github/workflows/workflow.yml
     with:
       flake_ref: github:flox/nixpkgs/staging
       attr_path: legacyPackages.aarch64-darwin
