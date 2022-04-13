@@ -17,7 +17,11 @@ on:
         required: false
         type: string
         default: "versions-cache"
-      git_token: ${{ secrets.GIT_TOKEN }}
+      git_token:
+        description: "git credential"
+        required: false
+        type: string
+        default: ${{ secrets.GIT_TOKEN }}
 
 jobs:
   eval_cache:
