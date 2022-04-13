@@ -30,7 +30,7 @@ jobs:
       - uses: flox/flox-integration-action@master
         with:
           flake_ref: ${{inputs.flake_ref}}
-          attr_path: ${{github.event.inputs.attr_path}}
+          attr_path: ${{inputs.attr_path}}
           substituter: https://storehouse.beta.floxdev.com/project/flox-examples
           aws_bucket: ${{github.event.inputs.aws_bucket}}
           aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
