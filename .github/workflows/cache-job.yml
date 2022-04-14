@@ -11,13 +11,14 @@ jobs:
     with:
       flake_ref: github:flox/nixpkgs/unstable
       attr_path: legacyPackages.x86_64-linux
-
+      git_token: ${{ secrets.GIT_TOKEN }}
 
   stable_x86_64-linux:
     uses: ./.github/workflows/workflow.yml
     with:
       flake_ref: github:flox/nixpkgs/stable
       attr_path: legacyPackages.x86_64-linux
+      git_token: ${{ secrets.GIT_TOKEN }}
 
 
 
@@ -26,12 +27,14 @@ jobs:
     with:
       flake_ref: github:flox/nixpkgs/staging
       attr_path: legacyPackages.x86_64-linux
+      git_token: ${{ secrets.GIT_TOKEN }}
 
   unstable_aarch64-darwin:
     uses: ./.github/workflows/workflow.yml
     with:
       flake_ref: github:flox/nixpkgs/unstable
       attr_path: legacyPackages.aarch64-darwin
+      git_token: ${{ secrets.GIT_TOKEN }}
 
 
   stable_aarch64-darwin:
@@ -39,6 +42,7 @@ jobs:
     with:
       flake_ref: github:flox/nixpkgs/stable
       attr_path: legacyPackages.aarch64-darwin
+      git_token: ${{ secrets.GIT_TOKEN }}
 
 
 
@@ -47,3 +51,4 @@ jobs:
     with:
       flake_ref: github:flox/nixpkgs/staging
       attr_path: legacyPackages.aarch64-darwin
+      git_token: ${{ secrets.GIT_TOKEN }}
