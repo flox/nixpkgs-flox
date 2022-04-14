@@ -20,8 +20,6 @@ on:
       git_token:
         description: "git credential"
         required: false
-        type: string
-        default: ${{ secrets.GIT_TOKEN }}
 
 jobs:
   eval_cache:
