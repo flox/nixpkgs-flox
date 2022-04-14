@@ -11,39 +11,47 @@ jobs:
     with:
       flake_ref: github:flox/nixpkgs/unstable
       attr_path: legacyPackages.x86_64-linux
+    secrets:
       git_token: ${{ secrets.GIT_TOKEN }}
-
+      aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   stable_x86_64-linux:
     uses: ./.github/workflows/workflow.yml
     with:
       flake_ref: github:flox/nixpkgs/stable
       attr_path: legacyPackages.x86_64-linux
+    secrets:
       git_token: ${{ secrets.GIT_TOKEN }}
-
-
-
+      aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   staging_x86_64-linux:
     uses: ./.github/workflows/workflow.yml
     with:
       flake_ref: github:flox/nixpkgs/staging
       attr_path: legacyPackages.x86_64-linux
+    secrets:
       git_token: ${{ secrets.GIT_TOKEN }}
-
+      aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   unstable_aarch64-darwin:
     uses: ./.github/workflows/workflow.yml
     with:
       flake_ref: github:flox/nixpkgs/unstable
       attr_path: legacyPackages.aarch64-darwin
+    secrets:
       git_token: ${{ secrets.GIT_TOKEN }}
-
+      aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
   stable_aarch64-darwin:
     uses: ./.github/workflows/workflow.yml
     with:
       flake_ref: github:flox/nixpkgs/stable
       attr_path: legacyPackages.aarch64-darwin
+    secrets:
       git_token: ${{ secrets.GIT_TOKEN }}
-
+      aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
 
   staging_aarch64-darwin:
@@ -51,4 +59,7 @@ jobs:
     with:
       flake_ref: github:flox/nixpkgs/staging
       attr_path: legacyPackages.aarch64-darwin
+    secrets:
       git_token: ${{ secrets.GIT_TOKEN }}
+      aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

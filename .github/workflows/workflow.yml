@@ -17,13 +17,6 @@ on:
         required: false
         type: string
         default: "versions-cache"
-      git_token:
-        description: "git credential"
-        required: false
-        type: string
-    secrets:
-      GIT_TOKEN:
-        required: false
 
 jobs:
   eval_cache:
