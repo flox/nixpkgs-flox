@@ -20,6 +20,7 @@ on:
       git_token:
         description: "git credential"
         required: false
+        type: string
 
 jobs:
   eval_cache:
