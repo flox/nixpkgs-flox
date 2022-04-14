@@ -17,7 +17,13 @@ on:
         required: false
         type: string
         default: "versions-cache"
-
+    secrets:
+      GIT_TOKEN:
+        required: false
+      AWS_ACCESS_KEY_ID:
+        required: true
+      AWS_SECRET_ACCESS_KEY:
+        required: true
 jobs:
   eval_cache:
     runs-on: ubuntu-latest
