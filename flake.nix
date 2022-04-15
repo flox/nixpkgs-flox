@@ -1,7 +1,6 @@
 rec {
   inputs.nixpkgs.url = "github:flox/nixpkgs/staging";
-  #inputs.capacitor.url = "github:flox/capacitor";
-  inputs.capacitor.url = "/home/tom/flox/capacitor";
+  inputs.capacitor.url = "github:flox/capacitor";
   inputs.nix-eval-jobs.url = "github:tomberek/nix-eval-jobs";
 
   outputs = {
@@ -36,7 +35,11 @@ rec {
            getFlake
 
          )
-         (builtins.fromJSON (builtins.readFile ./versionCache/${attr}/manifest.json)).legacyPackages.${system}.${attr}));
+         (builtins.fromJSON (builtins.readFile
+         (
+         /. + (builtins.getEnv "HOME") + "/.cache/flox/versions/${attr}/manifest.json"
+         )
+         )).legacyPackages.${system}.${attr}));
 
       # Use this to generate the data.
       apps.x86_64-linux = {
@@ -46,7 +49,7 @@ rec {
             name = "versionsOf";
             runtimeInputs = [jq coreutils];
             text = ''
-              mkdir -p versionCache/"$1"
+              mkdir -p "$HOME/.cache/flox/versions/$1"
 
               nix eval .#versionsOf."$1" --json --impure | \
               jq .elements[] -cr | \
@@ -55,7 +58,7 @@ rec {
                 --substituter https://storehouse.beta.floxdev.com \
                 -u grep | \
               jq -sf ${capacitor}/lib/split.jq | \
-              tee versionCache/"$1"/manifest.json
+              tee "$HOME/.cache/flox/versions/$1/manifest.json"
             '';
           }) + "/bin/versionsOf";
         };
