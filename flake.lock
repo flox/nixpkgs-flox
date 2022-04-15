@@ -6,17 +6,17 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1649987579,
-        "narHash": "sha256-xB8StKPmYwiO9uP/qpBLYtR6tGL/s6bXViRK9lMZxWE=",
-        "owner": "flox",
-        "repo": "capacitor",
-        "rev": "00f19388beedd964451ca58056eab6bcb00e6d55",
-        "type": "github"
+        "lastModified": 1649989767,
+        "narHash": "sha256-DCxSVua3sXkDF+C37ZNg25ubN+ax16oI9xUuyYGJkOs=",
+        "ref": "master",
+        "rev": "de6dc34b7da9be4925539c78d107955b2c17221e",
+        "revCount": 35,
+        "type": "git",
+        "url": "file:///home/tom/flox/capacitor"
       },
       "original": {
-        "owner": "flox",
-        "repo": "capacitor",
-        "type": "github"
+        "type": "git",
+        "url": "file:///home/tom/flox/capacitor"
       }
     },
     "flake-utils": {

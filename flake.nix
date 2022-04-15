@@ -1,6 +1,7 @@
 rec {
   inputs.nixpkgs.url = "github:flox/nixpkgs/staging";
-  inputs.capacitor.url = "github:flox/capacitor";
+  #inputs.capacitor.url = "github:flox/capacitor";
+  inputs.capacitor.url = "/home/tom/flox/capacitor";
   inputs.nix-eval-jobs.url = "github:tomberek/nix-eval-jobs";
 
   outputs = {
@@ -21,7 +22,7 @@ rec {
       # nix profile install --impure path:.#cachedPackages.x86_64-linux.n2n.stable --max-jobs 0
       cachedPackages =
         nixpkgs.lib.genAttrs ["x86_64-linux"] (system:
-        nixpkgs.lib.genAttrs ["hello" "jq" "n2n"] (attr:
+        nixpkgs.lib.genAttrs (builtins.attrNames nixpkgs.legacyPackages.${system}) (attr:
 
          with nixpkgs.lib;
          attrsets.mapAttrsRecursiveCond
@@ -30,7 +31,7 @@ rec {
 
          let
            theFlake = (builtins.getFlake a.element.uri);
-           getFlake = attrsets.getAttrFromPath (["legacyPackages" system attr]) theFlake;
+           getFlake = attrsets.attrByPath (["legacyPackages" system attr]) "does not exist" theFlake;
          in
            getFlake
 
@@ -51,7 +52,7 @@ rec {
             text = ''
               mkdir -p "$HOME/.cache/flox/versions/$1"
 
-              nix eval .#versionsOf."$1" --json --impure | \
+              nix eval ${self}#versionsOf."$1" --json --impure | \
               jq .elements[] -cr | \
               ${capacitor.apps.x86_64-linux.checkCache.program} \
                 --substituter https://cache.nixos.org \
@@ -65,7 +66,7 @@ rec {
       };
 
       versionsOf = with nixpkgs.lib.attrsets;
-        genAttrs ["hello" "jq" "n2n" "cowsay"] (
+        genAttrs (builtins.attrNames nixpkgs.legacyPackages.x86_64-linux) (
           attrpath: let
             # TODO: use this to fetch from on-nix?
             # data = builtins.fromJSON (builtins.readFile (builtins.fetchurl "https://raw.githubusercontent.com/on-nix/pkgs/main/data/nixpkgs/attrs/${attrpath}.json"));
@@ -88,18 +89,23 @@ rec {
                 }
               )
               [
-                "stable"
-                "staging"
-                "staging.20210904"
-                "staging.20211009"
-                "staging.20220108"
-                "staging.20220122"
-                "staging.20220122"
-                "unstable.20210811"
-                "unstable.20210901"
-                "unstable.20210928"
-                "unstable.20220103"
-                "unstable.20220105"
+"stable"
+"staging"
+"unstable"
+"stable.20210904"
+"stable.20220205"
+"staging.20210904"
+"staging.20211009"
+"staging.20220108"
+"staging.20220122"
+"staging.20220402"
+"unstable.20210901"
+"unstable.20210928"
+"unstable.20220103"
+"unstable.20220105"
+"unstable.20220113"
+"unstable.20220323"
+"unstable.20220413"
               ];
             #data.versions;
             # getFlake
