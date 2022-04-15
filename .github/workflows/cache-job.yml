@@ -1,10 +1,6 @@
 name: "Create built versions cache"
 on:
-  pull_request:
-  push:
-  schedule:
-    - cron: '15 * * * *'
-
+  workflow_call:
 jobs:
   unstable_x86_64-linux:
     uses: ./.github/workflows/workflow.yml
