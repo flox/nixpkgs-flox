@@ -51,7 +51,7 @@ rec {
             text = ''
                 gh api --method GET  \
                 -H "Accept: application/vnd.github.v3+json" \
-                /repos/flox/nixpkgs/git/refs/tags | jq -r .[].ref | cut -d '/' -f 3
+                /repos/"$1"/"$2"/git/refs/tags | jq -r .[].ref | cut -d '/' -f 3
                 '';
           }) + "/bin/ghRepoTags";
         };
