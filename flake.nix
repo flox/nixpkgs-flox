@@ -43,6 +43,18 @@ rec {
 
       # Use this to generate the data.
       apps.x86_64-linux = {
+        ghRepoTags = {
+          type = "app";
+          program = with nixpkgs.legacyPackages.x86_64-linux; (writeShellApplication {
+            name = "ghRepoTags";
+            runtimeInputs = [gh];
+            text = ''
+                gh api --method GET  \
+                -H "Accept: application/vnd.github.v3+json" \
+                /repos/flox/nixpkgs/git/refs/tags | jq -r .[].ref | cut -d '/' -f 3
+                '';
+          }) + "/bin/ghRepoTags";
+        };
         versionsOf = {
           type = "app";
           program = with nixpkgs.legacyPackages.x86_64-linux; (writeShellApplication {
