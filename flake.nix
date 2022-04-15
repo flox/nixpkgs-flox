@@ -1,7 +1,6 @@
 rec {
   inputs.nixpkgs.url = "github:flox/nixpkgs/staging";
-  #inputs.capacitor.url = "github:flox/capacitor";
-  inputs.capacitor.url = "/home/tom/flox/capacitor";
+  inputs.capacitor.url = "github:flox/capacitor";
   inputs.nix-eval-jobs.url = "github:tomberek/nix-eval-jobs";
 
   outputs = {
@@ -55,6 +54,7 @@ rec {
               nix eval ${self}#versionsOf."$1" --json --impure | \
               jq .elements[] -cr | \
               ${capacitor.apps.x86_64-linux.checkCache.program} \
+                --db-path "$HOME/.cache/flox/versions/cache.sqlite" \
                 --substituter https://cache.nixos.org \
                 --substituter https://storehouse.beta.floxdev.com \
                 -u grep | \

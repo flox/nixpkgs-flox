@@ -8,15 +8,15 @@
       "locked": {
         "lastModified": 1649989767,
         "narHash": "sha256-DCxSVua3sXkDF+C37ZNg25ubN+ax16oI9xUuyYGJkOs=",
-        "ref": "master",
+        "owner": "flox",
+        "repo": "capacitor",
         "rev": "de6dc34b7da9be4925539c78d107955b2c17221e",
-        "revCount": 35,
-        "type": "git",
-        "url": "file:///home/tom/flox/capacitor"
+        "type": "github"
       },
       "original": {
-        "type": "git",
-        "url": "file:///home/tom/flox/capacitor"
+        "owner": "flox",
+        "repo": "capacitor",
+        "type": "github"
       }
     },
     "flake-utils": {
