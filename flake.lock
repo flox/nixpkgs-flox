@@ -6,20 +6,32 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1649428628,
-        "narHash": "sha256-OqpiI4c9XbiaYmQN6I+9k3C8aIU+8hv4fnuCPUEmksQ=",
-        "owner": "flox",
-        "repo": "capacitor",
-        "rev": "0b978f9f46f78ac542edcafba03a07c8f48a8573",
-        "type": "github"
+        "lastModified": 1649985889,
+        "narHash": "sha256-9AwmqZs6h+J15pkcecV+tk+BvNdyBuZcEh7BegV8tag=",
+        "type": "git",
+        "url": "file:///home/tom/flox/capacitor"
       },
       "original": {
-        "owner": "flox",
-        "repo": "capacitor",
-        "type": "github"
+        "type": "git",
+        "url": "file:///home/tom/flox/capacitor"
       }
     },
     "flake-utils": {
+      "locked": {
+        "lastModified": 1644229661,
+        "narHash": "sha256-1YdnJAsNy69bpcjuoKdOYQX0YxZBiCYZo4Twxerqv7k=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "3cecb5b042f7f209c56ffd8371b2711a290ec797",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "flake-utils_2": {
       "locked": {
         "lastModified": 1644229661,
         "narHash": "sha256-1YdnJAsNy69bpcjuoKdOYQX0YxZBiCYZo4Twxerqv7k=",
@@ -45,6 +57,25 @@
         "owner": "tomberek",
         "repo": "nix-eval-jobs",
         "rev": "575f201b4269b3e5c248a5236eabd8a3cbaeec3e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "tomberek",
+        "repo": "nix-eval-jobs",
+        "type": "github"
+      }
+    },
+    "nix-eval-jobs_2": {
+      "inputs": {
+        "flake-utils": "flake-utils_2",
+        "nixpkgs": "nixpkgs_3"
+      },
+      "locked": {
+        "lastModified": 1649645040,
+        "narHash": "sha256-wfdvRP2r91dXjfdbak/30Tv3gZftHlwIyAcUTQIoP9Y=",
+        "owner": "tomberek",
+        "repo": "nix-eval-jobs",
+        "rev": "a56cd00e43a277116b1e46cf636858cac37c0216",
         "type": "github"
       },
       "original": {
@@ -87,11 +118,27 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1648652791,
-        "narHash": "sha256-u69opCeHUx3CsdIerD0wVSR+DjfDQjnztObqfk9Trqc=",
+        "lastModified": 1647186833,
+        "narHash": "sha256-62CMNrhICLcI/5jNSQDAQpUUvtvTXBsYWSU6ZlhPIzs=",
+        "owner": "Mic92",
+        "repo": "nixpkgs",
+        "rev": "de173cbbb66e9b454e0e836cec1b807856934539",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Mic92",
+        "ref": "nix-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_4": {
+      "locked": {
+        "lastModified": 1649266337,
+        "narHash": "sha256-vQUROcJ3FfT3GTB/nJrXwVvjuq8WfK0ImN+RUgDVN1c=",
         "owner": "flox",
         "repo": "nixpkgs",
-        "rev": "5e1e954474fa927e5b29f1c9c9c2237b9165a9ae",
+        "rev": "6337a63bfbc67a505f1d280f0e91860e373b3330",
         "type": "github"
       },
       "original": {
@@ -104,7 +151,8 @@
     "root": {
       "inputs": {
         "capacitor": "capacitor",
-        "nixpkgs": "nixpkgs_3"
+        "nix-eval-jobs": "nix-eval-jobs_2",
+        "nixpkgs": "nixpkgs_4"
       }
     }
   },
