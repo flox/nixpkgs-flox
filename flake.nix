@@ -3,15 +3,22 @@ rec {
   inputs.capacitor.url = "git+ssh://git@github.com/flox/capacitor?ref=ysndr";
   inputs.capacitor.inputs.root.follows = "/";
 
+  inputs.nixpkgs-stable.url = "github:flox/nixpkgs/stable";
+  inputs.nixpkgs-unstable.url = "github:flox/nixpkgs/unstable";
+  inputs.nixpkgs-staging.url = "github:flox/nixpkgs/staging";
+
   inputs.nix-eval-jobs.url = "github:tomberek/nix-eval-jobs";
 
-  outputs = args@{self, nixpkgs, capacitor,nix-eval-jobs}:
+  outputs = args@{self, nixpkgs, capacitor,nix-eval-jobs,...}:
   {lib = nixpkgs.lib;} //
   capacitor args (_: {
-    legacyPackages = {system,...}: import nixpkgs {
+    legacyPackages = {system,...}: let pkgs = (nixpkgs.lib.genAttrs ["stable" "staging" "unstable"] (stability: import args."nixpkgs-${stability}" {
       config.allowUnfree = true;
       inherit system;
-    };
+    })); in (import args.nixpkgs {
+      config.allowUnfree = true;
+      inherit system;
+    })// pkgs;
 
     packages.full-eval = {system,...}: let
           system = "x86_64-linux";
