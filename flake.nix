@@ -6,6 +6,7 @@ rec {
   inputs.nix-eval-jobs.url = "github:tomberek/nix-eval-jobs";
 
   outputs = args@{self, nixpkgs, capacitor,nix-eval-jobs}:
+  {lib = nixpkgs.lib;} //
   capacitor args (_: {
     legacyPackages = {system,...}: import nixpkgs {
       config.allowUnfree = true;
