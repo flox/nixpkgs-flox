@@ -1,6 +1,6 @@
 rec {
   inputs.nixpkgs.url = "github:flox/nixpkgs/unstable";
-  inputs.capacitor.url = "git+ssh://git@github.com/flox/capacitor?ref=ysndr";
+  inputs.capacitor.url = "git+ssh://git@github.com/flox/capacitor";
   inputs.capacitor.inputs.root.follows = "/";
 
   inputs.nixpkgs-stable.url = "github:flox/nixpkgs/stable";
@@ -16,8 +16,7 @@ rec {
     nix-eval-jobs,
     ...
   }:
-    {lib = nixpkgs.lib;}
-    // capacitor args (_: {
+    (capacitor args (_: {
       legacyPackages = {system, ...}: let
         pkgs = nixpkgs.lib.genAttrs ["stable" "staging" "unstable"] (
           stability:
@@ -67,5 +66,7 @@ rec {
             EOF
             tar -acf $out self
           '';
-    });
+        })) //
+        {lib = args.nixpkgs-unstable.lib;}
+        ;
 }
