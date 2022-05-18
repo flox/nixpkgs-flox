@@ -27,6 +27,7 @@ rec {
             // {recurseForDerivations = true;}
         );
       in pkgs
+        // pkgs.unstable
         // {recurseForDerivations = true;};
 
       packages.full-eval = {system, ...}: let
