@@ -8,11 +8,11 @@
         "root": []
       },
       "locked": {
-        "lastModified": 1653516494,
-        "narHash": "sha256-I4mK6ZzPd9Rtpu7BzstkAn5D52uLHrGmIo8X7ko+dYI=",
+        "lastModified": 1653698336,
+        "narHash": "sha256-KAU5xvm9+XjRmcDq4HrCPhGZWl04whYKT+NEDAXsT+I=",
         "ref": "refs/heads/master",
-        "rev": "020042765b743faee3e7d4204c02c27f7911d842",
-        "revCount": 187,
+        "rev": "528cbc844243e456f286772e30ebc2ccc946d9ec",
+        "revCount": 192,
         "type": "git",
         "url": "ssh://git@github.com/flox/capacitor"
       },
@@ -138,11 +138,11 @@
     },
     "nixpkgs-staging": {
       "locked": {
-        "lastModified": 1652794215,
-        "narHash": "sha256-erVj41IcCPDWdt8CwT60ygD+SY/uhqip3RXwiESOCVk=",
+        "lastModified": 1653060744,
+        "narHash": "sha256-kfRusllRumpt33J1hPV+CeCCylCXEU7e0gn2/cIM7cY=",
         "owner": "flox",
         "repo": "nixpkgs",
-        "rev": "242efdc5a5aff8222c1152c0e4b9262bd02915b6",
+        "rev": "dfd82985c273aac6eced03625f454b334daae2e8",
         "type": "github"
       },
       "original": {
