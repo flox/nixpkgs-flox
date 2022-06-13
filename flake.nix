@@ -8,12 +8,14 @@ rec {
   inputs.nixpkgs-staging.url = "github:flox/nixpkgs/staging";
 
   inputs.nix-eval-jobs.url = "github:tomberek/nix-eval-jobs";
+  inputs.nix-editor.url = "github:vlinkz/nix-editor";
 
   outputs = args @ {
     self,
     nixpkgs,
     capacitor,
     nix-eval-jobs,
+    nix-editor,
     ...
   }:
     (capacitor args (_: {
@@ -24,7 +26,7 @@ rec {
               config.allowUnfree = true;
               inherit system;
             })
-            // {recurseForDerivations = true;}
+            // {recurseForDerivations = true; nix-editor = args.nix-editor.packages.${system}.nixeditor;}
         );
       in pkgs
         // pkgs.unstable
