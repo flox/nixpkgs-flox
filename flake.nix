@@ -32,6 +32,10 @@ rec {
         // pkgs.unstable
         // {recurseForDerivations = true;};
 
+      stable.legacyPackages = builtins.mapAttrs (_: v: v.stable) self.legacyPackages;
+      unstable.legacyPackages = builtins.mapAttrs (_: v: v.stable) self.legacyPackages;
+      staging.legacyPackages = builtins.mapAttrs (_: v: v.staging) self.legacyPackages;
+
       packages.full-eval = {system, ...}: let
         system = "x86_64-linux";
       in
