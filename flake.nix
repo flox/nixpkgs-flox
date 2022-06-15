@@ -1,7 +1,5 @@
-rec {
+{
   inputs.nixpkgs.url = "github:flox/nixpkgs/unstable";
-  inputs.capacitor.url = "git+ssh://git@github.com/flox/capacitor";
-  inputs.capacitor.inputs.root.follows = "/";
 
   inputs.nixpkgs-stable.url = "github:flox/nixpkgs/stable";
   inputs.nixpkgs-unstable.url = "github:flox/nixpkgs/unstable";
@@ -13,13 +11,13 @@ rec {
   outputs = args @ {
     self,
     nixpkgs,
-    capacitor,
     nix-eval-jobs,
     nix-editor,
     ...
   }:
-    (capacitor args (_: {
-      legacyPackages = {system, ...}: let
+  ({
+  __systems = [ "x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin"];
+      legacyPackages = nixpkgs.lib.genAttrs self.__systems (system: let
         pkgs = nixpkgs.lib.genAttrs ["stable" "staging" "unstable"] (
           stability:
             (import args."nixpkgs-${stability}" {
@@ -30,10 +28,10 @@ rec {
         );
       in pkgs
         // pkgs.unstable
-        // {recurseForDerivations = true;};
+        // {recurseForDerivations = true;});
 
       stable.legacyPackages = builtins.mapAttrs (_: v: v.stable) self.legacyPackages;
-      unstable.legacyPackages = builtins.mapAttrs (_: v: v.stable) self.legacyPackages;
+      unstable.legacyPackages = builtins.mapAttrs (_: v: v.unstable) self.legacyPackages;
       staging.legacyPackages = builtins.mapAttrs (_: v: v.staging) self.legacyPackages;
 
       packages.full-eval = {system, ...}: let
@@ -73,7 +71,7 @@ rec {
             EOF
             tar -acf $out self
           '';
-        })) //
+        }) //
         {lib = args.nixpkgs-unstable.lib;}
         ;
 }
