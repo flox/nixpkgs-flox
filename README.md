@@ -27,5 +27,3 @@ $ nix eval github:flox/nixpkgs-flox#cachedPackages.x86_64-linux.n2n  --impure --
   "unstable_20220413": "/nix/store/3pj1w7ms7lzqajrqxhd524b1kmk1lj45-n2n-3.0"
 }
 ```
-
-TODO: load multiple manifest.json into a DB and generate dynamic manifests for more detailed or complicated queries
