@@ -1,5 +1,6 @@
 rec {
-  inputs.nixpkgs.url = "github:flox/nixpkgs/unstable";
+  inputs.nixpkgs.url = "github:flox/nixpkgs/stable";
+  inputs.nixpkgs.follows = "nixpkgs-stable";
 
   inputs.nixpkgs-stable.url = "github:flox/nixpkgs/stable";
   inputs.nixpkgs-unstable.url = "github:flox/nixpkgs/unstable";
@@ -7,6 +8,7 @@ rec {
 
   inputs.nix-eval-jobs.url = "github:tomberek/nix-eval-jobs";
   inputs.nix-editor.url = "github:vlinkz/nix-editor";
+  inputs.nix-editor.inputs.nixpkgs.follows = "nixpkgs";
 
   outputs = args @ {
     self,
@@ -30,7 +32,7 @@ rec {
       );
     in
       pkgs
-      // pkgs.unstable
+      // pkgs.stable
       // {recurseForDerivations = true;});
 
     stable.legacyPackages = builtins.mapAttrs (_: v: v.stable) self.legacyPackages;
@@ -74,7 +76,7 @@ rec {
           '';
       }) nixpkgs.legacyPackages;
 
-    lib = args.nixpkgs-unstable.lib;
+    lib = args.nixpkgs-stable.lib;
     stabilities = {inherit (self) stable unstable staging;};
   };
 }
