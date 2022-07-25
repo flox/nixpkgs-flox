@@ -1,5 +1,4 @@
 rec {
-  inputs.nixpkgs.url = "github:flox/nixpkgs/stable";
   inputs.nixpkgs.follows = "nixpkgs-stable";
 
   inputs.nixpkgs-stable.url = "github:flox/nixpkgs/stable";
