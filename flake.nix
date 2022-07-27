@@ -1,38 +1,35 @@
 {
+  # nixpkgs collection
   inputs = {
     nixpkgs.follows = "nixpkgs-stable";
-
     nixpkgs-stable.url = "github:flox/nixpkgs/stable";
-    "nixpkgs.catalog.x86_64-linux" = {
-      url = https://alpha.floxsdlc.com/downloads/catalog/catalog.x86_64-linux.tar.gz;
+    nixpkgs-unstable.url = "github:flox/nixpkgs/unstable";
+    nixpkgs-staging.url = "github:flox/nixpkgs/staging";
+  };
+
+  # Catalogs
+  inputs = {
+    "nixpkgs.catalog.aarch64-darwin" = {
+      url = "https://catalog.floxsdlc.com/nixpkgs/catalog.aarch64-darwin.tar.gz";
       flake = false;
     };
 
-    nixpkgs-unstable.url = "github:flox/nixpkgs/unstable";
-    # "nixpkgs.catalog.x86_64-linux" = {
-    #   url = https://alpha.floxsdlc.com/downloads/catalog/catalog.x86_64-linux.tar.gz;
-    #   flake = false;
-    # };
+    "nixpkgs.catalog.x86_64-linux" = {
+      url = "https://catalog.floxsdlc.com/nixpkgs/catalog.x86_64-linux.tar.gz";
+      flake = false;
+    };
+  };
 
-    nixpkgs-staging.url = "github:flox/nixpkgs/staging";
-    # "nixpkgs.catalog.x86_64-linux" = {
-    #   url = https://alpha.floxsdlc.com/downloads/catalog/catalog.x86_64-linux.tar.gz;
-    #   flake = false;
-    # };
-   
+  # Capacitor inputs
+  inputs = {
     capacitor = {
       url = "github:flox/capacitor/v0";
       inputs.root.follows = "/";
     };
-
     flox-extras = {
       url = "github:flox/flox-extras";
       inputs.capacitor.follows = "capacitor";
     };
-
-
-
-
   };
 
   outputs = args @ {capacitor, ...}:
