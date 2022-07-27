@@ -1,16 +1,21 @@
-rec {
-  inputs.nixpkgs.follows = "nixpkgs-stable";
+{
+  inputs = {
+    nixpkgs.follows = "nixpkgs-stable";
 
-  inputs.nixpkgs-stable.url = "github:flox/nixpkgs/stable";
-  inputs.nixpkgs-unstable.url = "github:flox/nixpkgs/unstable";
-  inputs.nixpkgs-staging.url = "github:flox/nixpkgs/staging";
+    nixpkgs-stable.url = "github:flox/nixpkgs/stable";
+    nixpkgs-unstable.url = "github:flox/nixpkgs/unstable";
+    nixpkgs-staging.url = "github:flox/nixpkgs/staging";
+   
+    capacitor = {
+      url = "github:flox/capacitor/v0";
+      inputs.root.follows = "/";
+    };
 
-  inputs.capacitor.url = "github:flox/capacitor/v0";
-  inputs.capacitor.inputs.root.follows = "/";
-
-  inputs.nix-eval-jobs.url = "github:tomberek/nix-eval-jobs";
-  inputs.nix-editor.url = "github:vlinkz/nix-editor";
-  inputs.nix-editor.inputs.nixpkgs.follows = "nixpkgs";
+    flox-extras = {
+      url = "github:flox/flox-extras";
+      inputs.capacitor.follows = "capacitor";
+    };
+  };
 
   outputs = args @ {capacitor, ...}:
     capacitor args ({
