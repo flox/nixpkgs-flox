@@ -42,7 +42,15 @@
     }: {
       config = {
         systems = ["x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin"];
-        plugins = [inputs.flox-extras.plugins.catalog { catalog = inputs."nixpkgs.catalog.x86_64-linux"; path = "x86_64-linux"; }];
+        plugins =
+          []
+          ++ (map (
+            system:
+              inputs.flox-extras.plugins.catalog {
+                catalog = inputs."nixpkgs.catalog.${system}";
+                system = "${system}";
+              }
+          ) ["x86_64-linux" "x86_64-darwin"]);
       };
 
       passthru = {
