@@ -3,8 +3,22 @@
     nixpkgs.follows = "nixpkgs-stable";
 
     nixpkgs-stable.url = "github:flox/nixpkgs/stable";
+    "nixpkgs.catalog.x86_64-linux" = {
+      url = https://alpha.floxsdlc.com/downloads/catalog/catalog.x86_64-linux.tar.gz;
+      flake = false;
+    };
+
     nixpkgs-unstable.url = "github:flox/nixpkgs/unstable";
+    # "nixpkgs.catalog.x86_64-linux" = {
+    #   url = https://alpha.floxsdlc.com/downloads/catalog/catalog.x86_64-linux.tar.gz;
+    #   flake = false;
+    # };
+
     nixpkgs-staging.url = "github:flox/nixpkgs/staging";
+    # "nixpkgs.catalog.x86_64-linux" = {
+    #   url = https://alpha.floxsdlc.com/downloads/catalog/catalog.x86_64-linux.tar.gz;
+    #   flake = false;
+    # };
    
     capacitor = {
       url = "github:flox/capacitor/v0";
@@ -15,6 +29,10 @@
       url = "github:flox/flox-extras";
       inputs.capacitor.follows = "capacitor";
     };
+
+
+
+
   };
 
   outputs = args @ {capacitor, ...}:
@@ -27,7 +45,7 @@
     }: {
       config = {
         systems = ["x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin"];
-        plugins = [];
+        plugins = [inputs.flox-extras.plugins.catalog { catalog = inputs."nixpkgs.catalog.x86_64-linux"; path = "x86_64-linux"; }];
       };
 
       passthru = {
