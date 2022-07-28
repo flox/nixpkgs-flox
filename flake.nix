@@ -54,7 +54,7 @@
       };
 
       passthru = {
-        lib = inputs.nixpkgs-unstable.lib;
+        lib = inputs.nixpkgs-stable.lib;
         legacyPackages = lib.genAttrs systems (system: let
           pkgs = lib.genAttrs ["stable" "staging" "unstable"] (
             stability:
