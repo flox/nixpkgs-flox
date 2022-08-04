@@ -47,7 +47,7 @@
           ++ (map (
             system:
               inputs.flox-extras.plugins.catalog {
-                catalog = inputs."nixpkgs.catalog.${system}";
+                catalogFile = inputs."nixpkgs.catalog.${system}";
                 system = "${system}";
               }
           ) ["x86_64-linux" "x86_64-darwin"]);
