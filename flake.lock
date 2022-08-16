@@ -107,7 +107,7 @@
     "nixpkgs.catalog.aarch64-darwin": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-LYapuSd4oXxhBf3TqD6spJM6l5/UUDFF2LDsUnJSgno=",
+        "narHash": "sha256-kOkcdNmtrA9qC8EunIYFjpuk5KdSL1SsbxB07wuu2uA=",
         "type": "tarball",
         "url": "https://catalog.floxsdlc.com/nixpkgs/catalog.aarch64-darwin.tar.gz"
       },
@@ -119,7 +119,7 @@
     "nixpkgs.catalog.x86_64-linux": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-XjlwQfcElPdNYe0UMcX8zNhfHvBrewNNy8nUIFypiVc=",
+        "narHash": "sha256-aa3FCuD7iEK3XnLaezHy7WxeooVmQRO2FZ0ruLgNzao=",
         "type": "tarball",
         "url": "https://catalog.floxsdlc.com/nixpkgs/catalog.x86_64-linux.tar.gz"
       },
