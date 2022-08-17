@@ -67,7 +67,7 @@
       passthru = {
         lib = inputs.nixpkgs-stable.lib;
         legacyPackages = lib.genAttrs systems (system: let
-          pkgs = lib.genAttrs ["stable" "staging" "unstable"] (
+          stabilities = lib.genAttrs ["stable" "staging" "unstable"] (
             stability:
               (import inputs."nixpkgs-${stability}" {
                 config.allowUnfree = true;
@@ -76,7 +76,8 @@
               // {recurseForDerivations = true;}
           );
         in
-          pkgs
+          stabilities.stable
+          // stabilities
           // {recurseForDerivations = true;});
         stable.legacyPackages = builtins.mapAttrs (_: v: v.stable) self.legacyPackages;
         unstable.legacyPackages = builtins.mapAttrs (_: v: v.unstable) self.legacyPackages;
