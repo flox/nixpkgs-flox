@@ -18,6 +18,11 @@
       url = "github:flox/nixpkgs-catalog/x86_64-linux";
       flake = false;
     };
+
+    "nixpkgs__catalog__x86_64-darwin" = {
+      url = "github:flox/nixpkgs-catalog/x86_64-darwin";
+      flake = false;
+    };
   };
 
   # Capacitor inputs
@@ -58,6 +63,9 @@
                 {system="aarch64-darwin";stability="stable";}
                 {system="aarch64-darwin";stability="staging";}
                 {system="aarch64-darwin";stability="unstable";}
+                {system="x86_64-darwin";stability="stable";}
+                {system="x86_64-darwin";stability="staging";}
+                {system="x86_64-darwin";stability="unstable";}
               ])
 
           # ++ (builtins.concatMap (
