@@ -9,13 +9,13 @@
 
   # Catalogs
   inputs = {
-    "nixpkgs.catalog.aarch64-darwin" = {
-      url = "https://catalog.floxsdlc.com/nixpkgs/catalog.aarch64-darwin.tar.gz";
+    "nixpkgs__catalog__aarch64-darwin" = {
+      url = "github:flox/nixpkgs-catalog/aarch64-darwin";
       flake = false;
     };
 
-    "nixpkgs.catalog.x86_64-linux" = {
-      url = "https://catalog.floxsdlc.com/nixpkgs/catalog.x86_64-linux.tar.gz";
+    "nixpkgs__catalog__x86_64-linux" = {
+      url = "github:flox/nixpkgs-catalog/x86_64-linux";
       flake = false;
     };
   };
@@ -47,21 +47,25 @@
           ++ (map (
             system:
               inputs.flox-extras.plugins.catalog {
-                catalogFile = inputs."nixpkgs.catalog.${system}";
+                catalogDirectory = inputs."nixpkgs__catalog__${system}" + "/stable";
+                path = [];
                 system = "${system}";
               }
           ) ["x86_64-linux" "aarch64-darwin"])
-          ++ (builtins.concatMap (
-            system: (map (
-              stability:
-                inputs.flox-extras.plugins.catalog {
-                  catalogFile = self.__pins.snapshots."nixpkgs-${stability}".${system};
-                  path = ["snapshots" stability];
-                  system = "${system}";
-                }
-              # TODO add staging and unstable after they're getting built by machine
-            ) ["stable"])
-          ) ["x86_64-linux" "aarch64-darwin"]);
+
+          # ++ (builtins.concatMap (
+          #   system: (map (
+          #     stability:
+          #       inputs.flox-extras.plugins.catalog {
+          #         catalogFile = self.__pins.snapshots."nixpkgs-${stability}".${system};
+          #         path = ["snapshots" stability];
+          #         system = "${system}";
+          #       }
+          #     # TODO add staging and unstable after they're getting built by machine
+          #   ) ["stable"])
+          #   ) ["x86_64-linux" "aarch64-darwin"])
+            ;
+
       };
 
       passthru = {

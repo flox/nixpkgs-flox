@@ -104,28 +104,38 @@
         "type": "github"
       }
     },
-    "nixpkgs.catalog.aarch64-darwin": {
+    "nixpkgs_catalog_aarch64-darwin": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-FxwxLGta+qzT6VjZHSSH9O7h8O77TL5rupl4eI7fyaI=",
-        "type": "tarball",
-        "url": "https://catalog.floxsdlc.com/nixpkgs/catalog.aarch64-darwin.tar.gz"
+        "lastModified": 1662151970,
+        "narHash": "sha256-7lpMdMAqZP3+phO0Hzmo8bXAXi4CXS7Yf4ZFnCQ6+oo=",
+        "owner": "flox",
+        "repo": "nixpkgs-catalog",
+        "rev": "b5cc216c939b51634f070db3f88c25d95edd4164",
+        "type": "github"
       },
       "original": {
-        "type": "tarball",
-        "url": "https://catalog.floxsdlc.com/nixpkgs/catalog.aarch64-darwin.tar.gz"
+        "owner": "flox",
+        "ref": "aarch64-darwin",
+        "repo": "nixpkgs-catalog",
+        "type": "github"
       }
     },
-    "nixpkgs.catalog.x86_64-linux": {
+    "nixpkgs_catalog_x86_64-linux": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-uF9EPCN7jw4oDkobAAukbzzL6Tk/Nzx+nxUQl8e3J4I=",
-        "type": "tarball",
-        "url": "https://catalog.floxsdlc.com/nixpkgs/catalog.x86_64-linux.tar.gz"
+        "lastModified": 1662153485,
+        "narHash": "sha256-bLwicVAqR4Bm8aN+e76Cxs4fmJ0L4/JPH3GRJjaaIFs=",
+        "owner": "flox",
+        "repo": "nixpkgs-catalog",
+        "rev": "a033b93ded3a01527875d47d35d15a9489ed780f",
+        "type": "github"
       },
       "original": {
-        "type": "tarball",
-        "url": "https://catalog.floxsdlc.com/nixpkgs/catalog.x86_64-linux.tar.gz"
+        "owner": "flox",
+        "ref": "x86_64-linux",
+        "repo": "nixpkgs-catalog",
+        "type": "github"
       }
     },
     "root": {
@@ -138,8 +148,8 @@
         "nixpkgs-stable": "nixpkgs-stable",
         "nixpkgs-staging": "nixpkgs-staging",
         "nixpkgs-unstable": "nixpkgs-unstable",
-        "nixpkgs.catalog.aarch64-darwin": "nixpkgs.catalog.aarch64-darwin",
-        "nixpkgs.catalog.x86_64-linux": "nixpkgs.catalog.x86_64-linux"
+        "nixpkgs_catalog_aarch64-darwin": "nixpkgs_catalog_aarch64-darwin",
+        "nixpkgs_catalog_x86_64-linux": "nixpkgs_catalog_x86_64-linux"
       }
     }
   },
