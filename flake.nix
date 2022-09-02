@@ -45,13 +45,20 @@
         plugins =
           []
           ++ (map (
-            system:
+            value:
               inputs.flox-extras.plugins.catalog {
-                catalogDirectory = inputs."nixpkgs__catalog__${system}" + "/stable";
+                catalogDirectory = inputs."nixpkgs__catalog__${value.system}" + "/${value.stability}";
                 path = [];
-                system = "${system}";
+                system = "${value.system}";
               }
-          ) ["x86_64-linux" "aarch64-darwin"])
+              ) [
+                {system="x86_64-linux";stability="stable";}
+                {system="x86_64-linux";stability="staging";}
+                {system="x86_64-linux";stability="unstable";}
+                {system="aarch64-darwin";stability="stable";}
+                {system="aarch64-darwin";stability="staging";}
+                {system="aarch64-darwin";stability="unstable";}
+              ])
 
           # ++ (builtins.concatMap (
           #   system: (map (
