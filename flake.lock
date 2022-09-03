@@ -124,11 +124,11 @@
     "nixpkgs__catalog__x86_64-darwin": {
       "flake": false,
       "locked": {
-        "lastModified": 1662156500,
-        "narHash": "sha256-4hmBjFewx6i0/pIjUa9N3nNTUS/CHv70Jvcz27TTD/Q=",
+        "lastModified": 1662156636,
+        "narHash": "sha256-KRARaYwwxCT4bnz1mi4teWUFS6S2vn7huA0Mv7rk+YE=",
         "owner": "flox",
         "repo": "nixpkgs-catalog",
-        "rev": "b02a9d26ea794d0e529e77c98cde0fb4b5d2d9e9",
+        "rev": "55131c24be89091a8a55959ad24fa3ada64ebc09",
         "type": "github"
       },
       "original": {
