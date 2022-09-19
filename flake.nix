@@ -50,37 +50,26 @@
         plugins =
           []
           ++ (map (
-            value:
-              inputs.flox-extras.plugins.catalog {
-                catalogDirectory = inputs."nixpkgs__catalog__${value.system}" + "/${value.stability}";
-                path = [];
-                system = "${value.system}";
-              }
-              ) [
-                {system="x86_64-linux";stability="stable";}
-                {system="x86_64-linux";stability="staging";}
-                {system="x86_64-linux";stability="unstable";}
-                {system="aarch64-darwin";stability="stable";}
-                {system="aarch64-darwin";stability="staging";}
-                {system="aarch64-darwin";stability="unstable";}
-                {system="x86_64-darwin";stability="stable";}
-                {system="x86_64-darwin";stability="staging";}
-                {system="x86_64-darwin";stability="unstable";}
-              ])
+              catalog:
+                inputs.flox-extras.plugins.catalog {
+                  catalogDirectory = catalog;
+                  path = [];
+                }
+            )
+            (inputs.nixpkgs.lib.attrValues
+              (inputs.nixpkgs.lib.filterAttrs (name: _: inputs.nixpkgs.lib.hasPrefix "nixpkgs__catalog__" name) inputs)));
 
-          # ++ (builtins.concatMap (
-          #   system: (map (
-          #     stability:
-          #       inputs.flox-extras.plugins.catalog {
-          #         catalogFile = self.__pins.snapshots."nixpkgs-${stability}".${system};
-          #         path = ["snapshots" stability];
-          #         system = "${system}";
-          #       }
-          #     # TODO add staging and unstable after they're getting built by machine
-          #   ) ["stable"])
-          #   ) ["x86_64-linux" "aarch64-darwin"])
-            ;
-
+        # ++ (builtins.concatMap (
+        #   system: (map (
+        #     stability:
+        #       inputs.flox-extras.plugins.catalog {
+        #         catalogFile = self.__pins.snapshots."nixpkgs-${stability}".${system};
+        #         path = ["snapshots" stability];
+        #         system = "${system}";
+        #       }
+        #     # TODO add staging and unstable after they're getting built by machine
+        #   ) ["stable"])
+        #   ) ["x86_64-linux" "aarch64-darwin"])
       };
 
       passthru = {
