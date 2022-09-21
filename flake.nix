@@ -14,6 +14,11 @@
       flake = false;
     };
 
+    "nixpkgs__catalog__aarch64-linux" = {
+      url = "github:flox/nixpkgs-catalog/aarch64-linux";
+      flake = false;
+    };
+
     "nixpkgs__catalog__x86_64-linux" = {
       url = "github:flox/nixpkgs-catalog/x86_64-linux";
       flake = false;
