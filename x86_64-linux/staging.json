@@ -24,17 +24,13 @@
         "attrPath": [
           "legacyPackages",
           "x86_64-linux",
-          "staging",
-          [
-            "vimHugeX"
-          ]
+          "vimHugeX"
         ],
-        "originalAttrPath": [
+        "floxAttrPath": [
           "legacyPackages",
           "x86_64-linux",
-          [
-            "vimHugeX"
-          ]
+          "staging",
+          "vimHugeX"
         ],
         "originalUrl": "flake:floxpkgs",
         "outputs": null,
@@ -74,17 +70,13 @@
         "attrPath": [
           "legacyPackages",
           "x86_64-linux",
-          "staging",
-          [
-            "vimHugeX"
-          ]
+          "vimHugeX"
         ],
-        "originalAttrPath": [
+        "floxAttrPath": [
           "legacyPackages",
           "x86_64-linux",
-          [
-            "vimHugeX"
-          ]
+          "staging",
+          "vimHugeX"
         ],
         "originalUrl": "flake:floxpkgs",
         "outputs": null,
@@ -124,17 +116,13 @@
         "attrPath": [
           "legacyPackages",
           "x86_64-linux",
-          "staging",
-          [
-            "vimHugeX"
-          ]
+          "vimHugeX"
         ],
-        "originalAttrPath": [
+        "floxAttrPath": [
           "legacyPackages",
           "x86_64-linux",
-          [
-            "vimHugeX"
-          ]
+          "staging",
+          "vimHugeX"
         ],
         "originalUrl": "flake:floxpkgs",
         "outputs": null,

@@ -24,17 +24,13 @@
         "attrPath": [
           "legacyPackages",
           "x86_64-linux",
-          "stable",
-          [
-            "vimHugeX"
-          ]
+          "vimHugeX"
         ],
-        "originalAttrPath": [
+        "floxAttrPath": [
           "legacyPackages",
           "x86_64-linux",
-          [
-            "vimHugeX"
-          ]
+          "stable",
+          "vimHugeX"
         ],
         "originalUrl": "flake:floxpkgs",
         "outputs": null,
