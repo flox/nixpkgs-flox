@@ -21,13 +21,27 @@
         }
       },
       "element": {
-        "attrPath": "legacyPackages.aarch64-darwin.stable.vimHugeX",
+        "attrPath": [
+          "legacyPackages",
+          "aarch64-darwin",
+          "stable",
+          [
+            "vimHugeX"
+          ]
+        ],
+        "originalAttrPath": [
+          "legacyPackages",
+          "aarch64-darwin",
+          [
+            "vimHugeX"
+          ]
+        ],
         "originalUrl": "flake:floxpkgs",
         "outputs": null,
         "storePaths": [
           "/nix/store/v3dsg6z6cry8zbm7c6c0bdaw31kyjcis-vim_configurable-9.0.0001"
         ],
-        "url": "github:flox/floxpkgs/ce49cb7792a7ffd65ef352dda1110a4e4a204eac"
+        "url": "github:flox/nixpkgs/ce49cb7792a7ffd65ef352dda1110a4e4a204eac"
       },
       "source": {
         "locked": {
