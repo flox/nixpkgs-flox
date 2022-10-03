@@ -1,48 +1,38 @@
 {
-  "vimHugeX": {
-    "9.0.0001": {
+  "hello": {
+    "2.12.1": {
       "type": "catalogRender",
       "schema": 1,
       "eval": {
-        "version": "9.0.0001",
-        "pname": "vim_configurable",
-        "name": "vim_configurable-9.0.0001",
+        "version": "2.12.1",
+        "pname": "hello",
+        "name": "hello-2.12.1",
         "system": "x86_64-linux",
         "outputs": {
-          "out": "/nix/store/f7xk1z9841h1y8g3anq5j4ag70pa3gzy-vim_configurable-9.0.0001"
+          "out": "/nix/store/mg35qkhk7wqbhhykpakds4fsm1riy8ga-hello-2.12.1"
         },
         "meta": {
           "outputsToInstall": [
             "out"
           ],
-          "description": "The most popular clone of the VI editor",
-          "position": "/nix/store/9qqx4gk4qnqaqb102iwvhhwn2basmbdq-source/pkgs/applications/editors/vim/common.nix:24",
+          "description": "A program that produces a familiar, friendly greeting",
+          "position": "/nix/store/bnyi6xm7xjdgvnhps0d01h5nqd4lgc0p-source/pkgs/applications/misc/hello/default.nix:34",
           "unfree": false
         }
       },
       "element": {
-        "attrPath": [
-          "legacyPackages",
-          "x86_64-linux",
-          "vimHugeX"
-        ],
-        "floxAttrPath": [
-          "legacyPackages",
-          "x86_64-linux",
-          "stable",
-          "vimHugeX"
-        ],
+        "attrPath": "legacyPackages.x86_64-linux.stable.hello",
         "originalUrl": "flake:floxpkgs",
         "outputs": null,
         "storePaths": [
-          "/nix/store/f7xk1z9841h1y8g3anq5j4ag70pa3gzy-vim_configurable-9.0.0001"
+          "/nix/store/mg35qkhk7wqbhhykpakds4fsm1riy8ga-hello-2.12.1"
         ],
-        "url": "github:flox/nixpkgs/ce49cb7792a7ffd65ef352dda1110a4e4a204eac"
+        "url": "github:flox/floxpkgs/5e804cd8a27f835a402b22e086e36e797716ef8b"
       },
       "source": {
         "locked": {
-          "revCount": 394203,
-          "lastModified": 1658826464
+          "revCount": 402830,
+          "lastModified": 1661239211
         }
       }
     }
