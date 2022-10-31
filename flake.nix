@@ -89,7 +89,11 @@
               // {recurseForDerivations = true;}
           );
         in
-          stabilities.stable
+          # treat nixpkgs input as default nipkgs (following stable, by default)
+          (import inputs.nixpkgs {
+                config.allowUnfree = true;
+                inherit system;
+          })
           // stabilities
           // {recurseForDerivations = true;});
         stable.legacyPackages = builtins.mapAttrs (_: v: v.stable) self.legacyPackages;
