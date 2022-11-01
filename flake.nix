@@ -1,7 +1,7 @@
 {
   # nixpkgs collection
   inputs = {
-    nixpkgs.follows = "nixpkgs-stable";
+    nixpkgs.url = "github:flox/nixpkgs/stable";
     nixpkgs-stable.url = "github:flox/nixpkgs/stable";
     nixpkgs-unstable.url = "github:flox/nixpkgs/unstable";
     nixpkgs-staging.url = "github:flox/nixpkgs/staging";
