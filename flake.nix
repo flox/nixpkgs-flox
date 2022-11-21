@@ -100,6 +100,8 @@
         unstable.legacyPackages = builtins.mapAttrs (_: v: v.unstable) self.legacyPackages;
         staging.legacyPackages = builtins.mapAttrs (_: v: v.staging) self.legacyPackages;
 
+        __functor = _: import inputs.nixpkgs;
+
         # AUTO-MANAGED AFTER THIS POINT ##################################
         # AUTO-MANAGED AFTER THIS POINT ##################################
         # AUTO-MANAGED AFTER THIS POINT ##################################
