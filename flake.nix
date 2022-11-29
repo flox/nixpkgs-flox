@@ -32,18 +32,14 @@
 
   # Capacitor inputs
   inputs = {
-    capacitor = {
-      url = "github:flox/capacitor/v0";
-      inputs.root.follows = "/";
-    };
-    flox-extras = {
-      url = "github:flox/flox-extras";
+    floxpkgs = {
+      url = "github:flox/floxpkgs";
       inputs.capacitor.follows = "capacitor";
     };
   };
 
-  outputs = args @ {capacitor, ...}:
-    capacitor args ({
+  outputs = args @ {floxpkgs, ...}:
+    floxpkgs.project args ({
       self,
       inputs,
       systems,
@@ -56,7 +52,7 @@
           []
           ++ (map (
               catalog:
-                inputs.flox-extras.plugins.catalog {
+                inputs.floxpkgs.plugins.catalog {
                   catalogDirectory = catalog;
                   path = [];
                 }
