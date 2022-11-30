@@ -33,7 +33,7 @@
   # Capacitor inputs
   inputs = {
     floxpkgs = {
-      url = "github:flox/floxpkgs/remove_flox-extras";
+      url = "github:flox/floxpkgs";
     };
   };
 
