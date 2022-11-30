@@ -32,18 +32,13 @@
 
   # Capacitor inputs
   inputs = {
-    capacitor = {
-      url = "github:flox/capacitor/v0";
-      inputs.root.follows = "/";
-    };
-    flox-extras = {
-      url = "github:flox/flox-extras";
-      inputs.capacitor.follows = "capacitor";
+    floxpkgs = {
+      url = "github:flox/floxpkgs";
     };
   };
 
-  outputs = args @ {capacitor, ...}:
-    capacitor args ({
+  outputs = args @ {floxpkgs, ...}:
+    floxpkgs.project args ({
       self,
       inputs,
       systems,
@@ -56,25 +51,13 @@
           []
           ++ (map (
               catalog:
-                inputs.flox-extras.plugins.catalog {
+                inputs.floxpkgs.plugins.catalog {
                   catalogDirectory = catalog;
                   path = [];
                 }
             )
             (inputs.nixpkgs.lib.attrValues
               (inputs.nixpkgs.lib.filterAttrs (name: _: inputs.nixpkgs.lib.hasPrefix "nixpkgs__catalog__" name) inputs)));
-
-        # ++ (builtins.concatMap (
-        #   system: (map (
-        #     stability:
-        #       inputs.flox-extras.plugins.catalog {
-        #         catalogFile = self.__pins.snapshots."nixpkgs-${stability}".${system};
-        #         path = ["snapshots" stability];
-        #         system = "${system}";
-        #       }
-        #     # TODO add staging and unstable after they're getting built by machine
-        #   ) ["stable"])
-        #   ) ["x86_64-linux" "aarch64-darwin"])
       };
 
       passthru = {
@@ -99,6 +82,8 @@
         stable.legacyPackages = builtins.mapAttrs (_: v: v.stable) self.legacyPackages;
         unstable.legacyPackages = builtins.mapAttrs (_: v: v.unstable) self.legacyPackages;
         staging.legacyPackages = builtins.mapAttrs (_: v: v.staging) self.legacyPackages;
+
+        __functor = _: import inputs.nixpkgs;
 
       };
     });
