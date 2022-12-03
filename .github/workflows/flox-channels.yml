@@ -1,0 +1,123 @@
+name: "Flox channel progression"
+
+
+on:
+  workflow_dispatch:
+  schedule:
+    # * is a special character in YAML so you have to quote this string
+    # Run script every day at 8 UTC
+    - cron:  '01 8 * * *'
+
+
+jobs:
+
+  update-guard:
+    runs-on: ubuntu-latest
+    outputs:
+      run: ${{steps.guard.output.run}}
+    steps:
+      - name: Check whether to update
+        id: guard
+        run: |
+          dow=$(date +%u)
+
+          # Do nothing on a Thursday, Friday, or Sunday.
+          if [ $dow -eq 4 -o $dow -eq 5 -o $dow -eq 7 ]
+          then
+            echo '::notice title=Skip Update::No update performed on Thursday, Friday, or Sunday'
+            # set empty output so github can read the variable
+            echo "run=" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          # on any other day set guard to true
+          echo "run=true" >> $GITHUB_OUTPUT
+
+  flox-channels:
+    needs: [update-guard]
+    if: github.repository_owner == 'flox' && ${{ needs.update-guard.outputs.run }} == 'true'
+    env:
+      GH_TOKEN: ${{ secrets.NIX_GIT_TOKEN_TEMP }}
+
+    runs-on: ubuntu-latest
+
+    # TODO: implement configurable merge based on matrix
+
+    name: "Periodic pull from upstream"
+    steps:
+      - name: Configure Git Env
+        run: |
+          git config --global user.email "technology@floxdev.com"
+          git config --global user.name "Flox Nixpkgs Updater"
+
+          # gh automatically sets the `upstream` remote to github:NixOS/nixpkgs
+          gh repo clone flox/nixpkgs ./
+          gh auth setup-git
+
+          # gh configures the `upstream` repo to only contain the current branch, reconfigure to fetch all
+          git remote set-branches upstream '*'
+          git fetch upstream
+
+      - name: run update routine
+        run: |
+          set -e
+
+          # Today's date in YYYYMMDD format.
+          today=$(date +%Y%m%d)
+          # Day of week (1-7)
+          dow=$(date +%u)
+
+          # Running list of tags to be pushed.
+          tags=""
+
+          if [ $dow -eq 6 ]
+          then
+              dom=$(date +%e)
+              if [ $dom -le 7 ]
+              then
+                  echo '::group::reset staging->stable'
+                  # On first Saturday of the month, reset staging->stable.
+                  git checkout stable
+                  git tag stable.$today
+                  tags="$tags stable.$today"
+                  git reset --hard staging
+
+                  echo '::notice title=Promote Stable::Scheduled update of "stable" channel (staging->stable)'
+                  echo '::endgroup::'
+              fi
+
+              # Every Saturday, reset unstable->staging.
+              echo '::group::reset unstable->staging'
+              git checkout staging
+              git tag staging.$today
+              tags="$tags staging.$today"
+              git reset --hard unstable
+              echo '::notice title=Promote Staging::Scheduled update of "staging" channel (unstable->staging)'
+              echo '::endgroup::'
+
+          elif [ $dow -le 3 ]
+          then
+              # Rebase against upstream Monday-Wednesday only.
+              echo '::group::rebase against upstream'
+              git checkout unstable
+              git tag unstable.$today
+              tags="$tags unstable.$today"
+              git rebase upstream/nixos-unstable
+              echo '::notice title=Promote Unstable::Scheduled update of "unstable" channel (rebse onto nixpkgs/nixos-unstable)'
+              echo '::endgroup::'
+          fi
+
+          echo "::notice title=Summary::New tags: $tags"
+
+          git push origin $tags
+          git push -f --all
+
+      - name: Comment on failure
+        uses: peter-evans/create-or-update-comment@v2
+        if: ${{ failure() }}
+        with:
+          issue-number: 15
+          body: |
+            Periodic update has [failed](https://github.com/flox/nixpkgs-flox/actions/runs/${{ github.run_id }}).
+
+            @flox/internal
