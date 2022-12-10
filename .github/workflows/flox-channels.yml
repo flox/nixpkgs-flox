@@ -47,12 +47,13 @@ jobs:
     steps:
       - name: Configure Git Env
         run: |
-          git config --global user.email "technology@floxdev.com"
-          git config --global user.name "Flox Nixpkgs Updater"
-
           # gh automatically sets the `upstream` remote to github:NixOS/nixpkgs
           gh repo clone flox/nixpkgs ./
           gh auth setup-git
+
+          git config user.email "technology@floxdev.com"
+          git config user.name "Flox Nixpkgs Updater"
+          git config checkout.defaultRemote origin
 
           # gh configures the `upstream` repo to only contain the current branch, reconfigure to fetch all
           git remote set-branches upstream '*'
@@ -80,7 +81,7 @@ jobs:
                   git checkout stable
                   git tag stable.$today
                   tags="$tags stable.$today"
-                  git reset --hard staging
+                  git reset --hard origin/staging
 
                   echo '::notice title=Promote Stable::Scheduled update of "stable" channel (staging->stable)'
                   echo '::endgroup::'
@@ -91,7 +92,7 @@ jobs:
               git checkout staging
               git tag staging.$today
               tags="$tags staging.$today"
-              git reset --hard unstable
+              git reset --hard origin/unstable
               echo '::notice title=Promote Staging::Scheduled update of "staging" channel (unstable->staging)'
               echo '::endgroup::'
 
