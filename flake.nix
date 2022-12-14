@@ -10,22 +10,22 @@
   # Catalogs
   inputs = {
     "nixpkgs__catalog__aarch64-darwin" = {
-      url = "github:flox/nixpkgs-catalog/aarch64-darwin";
+      url = "github:flox/nixpkgs-catalog/aarch64-darwin?host=catalog.floxsdlc.com";
       flake = false;
     };
 
     "nixpkgs__catalog__aarch64-linux" = {
-      url = "github:flox/nixpkgs-catalog/aarch64-linux";
+      url = "github:flox/nixpkgs-catalog/aarch64-linux?host=catalog.floxsdlc.com";
       flake = false;
     };
 
     "nixpkgs__catalog__x86_64-linux" = {
-      url = "github:flox/nixpkgs-catalog/x86_64-linux";
+      url = "github:flox/nixpkgs-catalog/x86_64-linux?host=catalog.floxsdlc.com";
       flake = false;
     };
 
     "nixpkgs__catalog__x86_64-darwin" = {
-      url = "github:flox/nixpkgs-catalog/x86_64-darwin";
+      url = "github:flox/nixpkgs-catalog/x86_64-darwin?host=catalog.floxsdlc.com";
       flake = false;
     };
   };
@@ -36,6 +36,7 @@
       url = "github:flox/floxpkgs";
     };
   };
+  inputs.floxpkgs.inputs.nixpkgs.follows = "/";
 
   outputs = args @ {floxpkgs, ...}:
     floxpkgs.project args ({
