@@ -53,16 +53,19 @@
     }: {
       config = {
         systems = ["aarch64-linux" "aarch64-darwin" "i686-linux" "x86_64-linux" "x86_64-darwin"];
-        plugins =
-          []
-          ++ (map (
-              catalog:
+        extraPlugins =
+          [
+          ]
+          ++ (builtins.attrValues (builtins.mapAttrs (
+              name: catalog:
                 inputs.floxpkgs.plugins.catalog {
                   catalogDirectory = catalog;
                   path = [];
+                  # Baked in assumption that __<system> only contains that system
+                  # TODO: support longer prefixes
+                  includePath = [(lib.strings.removePrefix "nixpkgs__catalog__" name)];
                 }
             )
-            (inputs.nixpkgs.lib.attrValues
               (inputs.nixpkgs.lib.filterAttrs (name: _: inputs.nixpkgs.lib.hasPrefix "nixpkgs__catalog__" name) inputs)));
       };
 
@@ -90,6 +93,7 @@
         staging.legacyPackages = builtins.mapAttrs (_: v: v.staging) self.legacyPackages;
 
         __functor = _: import inputs.nixpkgs;
+        # __functionArgs = { config = true;  system = true; overlays = true;}; # TODO
 
       };
     });
