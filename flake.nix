@@ -63,7 +63,7 @@
                   path = [];
                   # Baked in assumption that __<system> only contains that system
                   # TODO: support longer prefixes
-                  pathPrefix = [(lib.strings.removePrefix "nixpkgs__catalog__" name)];
+                  includePath = [(lib.strings.removePrefix "nixpkgs__catalog__" name)];
                 }
             )
               (inputs.nixpkgs.lib.filterAttrs (name: _: inputs.nixpkgs.lib.hasPrefix "nixpkgs__catalog__" name) inputs)));
@@ -93,7 +93,7 @@
         staging.legacyPackages = builtins.mapAttrs (_: v: v.staging) self.legacyPackages;
 
         __functor = _: import inputs.nixpkgs;
-        __functionArgs = { config = true;  system = true; overlays = true;};
+        # __functionArgs = { config = true;  system = true; overlays = true;}; # TODO
 
       };
     });
