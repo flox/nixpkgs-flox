@@ -14,7 +14,7 @@ jobs:
   update-guard:
     runs-on: ubuntu-latest
     outputs:
-      run: ${{steps.guard.output.run}}
+      run: ${{steps.guard.outputs.run}}
     steps:
       - name: Check whether to update
         id: guard
@@ -26,7 +26,7 @@ jobs:
           then
             echo '::notice title=Skip Update::No update performed on Thursday, Friday, or Sunday'
             # set empty output so github can read the variable
-            echo "run=" >> $GITHUB_OUTPUT
+            echo "run=false" >> $GITHUB_OUTPUT
             exit 0
           fi
 
@@ -35,7 +35,7 @@ jobs:
 
   flox-channels:
     needs: [update-guard]
-    if: github.repository_owner == 'flox' && ${{ needs.update-guard.outputs.run }} == 'true'
+    if: github.repository_owner == 'flox' && parseJSON(needs.update-guard.outputs.run)
     env:
       GH_TOKEN: ${{ secrets.NIX_GIT_TOKEN_TEMP }}
 
