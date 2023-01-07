@@ -90,11 +90,11 @@
         "tracelinks": "tracelinks"
       },
       "locked": {
-        "lastModified": 1673099866,
-        "narHash": "sha256-RWya7iAClEMuQDDWK+D7Fi+Ata40q+uk23RpKCv3Ljo=",
+        "lastModified": 1673099949,
+        "narHash": "sha256-GXdVHXa/niUWbukhXNCJEWaa5U2tLCmowTqUUR9aI60=",
         "owner": "flox",
         "repo": "floxpkgs",
-        "rev": "ee0e4ffb7c35b4558a877383054c660fda0d9900",
+        "rev": "e942497870d51d0a5f4cff91ab01bd5542fe4fd4",
         "type": "github"
       },
       "original": {
