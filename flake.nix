@@ -66,7 +66,7 @@
                   includePath = [(lib.strings.removePrefix "nixpkgs__catalog__" name)];
                 }
             )
-              (inputs.nixpkgs.lib.filterAttrs (name: _: inputs.nixpkgs.lib.hasPrefix "nixpkgs__catalog__" name) inputs)));
+              (lib.filterAttrs (name: _: lib.hasPrefix "nixpkgs__catalog__" name) inputs)));
       };
 
       passthru = {
