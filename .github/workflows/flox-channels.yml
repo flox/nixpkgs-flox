@@ -35,7 +35,7 @@ jobs:
 
   flox-channels:
     needs: [update-guard]
-    if: github.repository_owner == 'flox' && parseJSON(needs.update-guard.outputs.run)
+    if: github.repository_owner == 'flox' && fromJSON(needs.update-guard.outputs.run)
     env:
       GH_TOKEN: ${{ secrets.NIX_GIT_TOKEN_TEMP }}
 
