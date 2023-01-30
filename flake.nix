@@ -9,42 +9,57 @@
 
   # Catalogs
   inputs = {
-    "nixpkgs__catalog__aarch64-darwin" = {
-      url = "github:flox/nixpkgs-catalog/aarch64-darwin?host=catalog.floxsdlc.com";
+    "nixpkgs__flox__aarch64-darwin" = {
+      url = "github:flox/nixpkgs-flox/aarch64-darwin?host=catalog.floxsdlc.com";
       flake = false;
     };
 
-    "nixpkgs__catalog__aarch64-linux" = {
-      url = "github:flox/nixpkgs-catalog/aarch64-linux?host=catalog.floxsdlc.com";
+    "nixpkgs__flox__aarch64-linux" = {
+      url = "github:flox/nixpkgs-flox/aarch64-linux?host=catalog.floxsdlc.com";
       flake = false;
     };
 
-    "nixpkgs__catalog__i686-linux" = {
-      url = "github:flox/nixpkgs-catalog/i686-linux?host=catalog.floxsdlc.com";
+    "nixpkgs__flox__i686-linux" = {
+      url = "github:flox/nixpkgs-flox/i686-linux?host=catalog.floxsdlc.com";
       flake = false;
     };
 
-    "nixpkgs__catalog__x86_64-linux" = {
-      url = "github:flox/nixpkgs-catalog/x86_64-linux?host=catalog.floxsdlc.com";
+    "nixpkgs__flox__x86_64-linux" = {
+      url = "github:flox/nixpkgs-flox/x86_64-linux?host=catalog.floxsdlc.com";
       flake = false;
     };
 
-    "nixpkgs__catalog__x86_64-darwin" = {
-      url = "github:flox/nixpkgs-catalog/x86_64-darwin?host=catalog.floxsdlc.com";
+    "nixpkgs__flox__x86_64-darwin" = {
+      url = "github:flox/nixpkgs-flox/x86_64-darwin?host=catalog.floxsdlc.com";
       flake = false;
     };
   };
 
   # Capacitor inputs
   inputs = {
-    floxpkgs = {
+    flox-floxpkgs = {
       url = "github:flox/floxpkgs";
     };
   };
-  inputs.floxpkgs.inputs.nixpkgs.follows = "/";
 
-  outputs = args @ {floxpkgs, ...}:
-    floxpkgs.project args ({
+  # Clean up of lockfile to re-use entries
+  inputs.flox.url = "git+ssh://git@github.com/flox/flox?ref=main";
+  inputs.flox.inputs.flox-floxpkgs.follows = "flox-floxpkgs";
+  inputs.flox.inputs.flox-bash.follows = "flox-bash";
+
+  inputs.flox-bash.url = "git+ssh://git@github.com/flox/flox-bash?ref=main";
+  inputs.flox-bash.inputs.flox-floxpkgs.follows = "flox-floxpkgs";
+  inputs.flox-floxpkgs.inputs.nixpkgs.follows = "/";
+  inputs.flox-floxpkgs.inputs.flox.follows = "flox";
+  inputs.nixpkgs.follows = "nixpkgs-stable";
+
+  # bug in Nix cannot support three levels of inputs/inputs/inputs/follows
+  inputs.flox-floxpkgs.inputs.capacitor.follows = "capacitor";
+  inputs.capacitor.url = "github:flox/capacitor";
+  inputs.capacitor.inputs.nixpkgs.follows = "nixpkgs";
+
+  outputs = args @ {flox-floxpkgs, ...}:
+    flox-floxpkgs.project args ({
       self,
       inputs,
       systems,
@@ -58,15 +73,15 @@
           ]
           ++ (builtins.attrValues (builtins.mapAttrs (
               name: catalog:
-                inputs.floxpkgs.plugins.catalog {
+                inputs.flox-floxpkgs.plugins.catalog {
                   catalogDirectory = catalog;
                   path = [];
                   # Baked in assumption that __<system> only contains that system
                   # TODO: support longer prefixes
-                  includePath = [(lib.strings.removePrefix "nixpkgs__catalog__" name)];
+                  includePath = [(lib.strings.removePrefix "nixpkgs__flox__" name)];
                 }
             )
-              (lib.filterAttrs (name: _: lib.hasPrefix "nixpkgs__catalog__" name) inputs)));
+              (lib.filterAttrs (name: _: lib.hasPrefix "nixpkgs__flox__" name) inputs)));
       };
 
       passthru = {
