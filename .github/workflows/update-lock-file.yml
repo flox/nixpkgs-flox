@@ -12,6 +12,9 @@ on:
 concurrency:
   group: nixpkgs-flox-update
   cancel-in-progress: true
+  
+permissions:
+  contents: write
 
 jobs:
   update_inputs:
