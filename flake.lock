@@ -381,11 +381,11 @@
       "flake": false,
       "locked": {
         "host": "catalog.floxsdlc.com",
-        "lastModified": 1679411908,
-        "narHash": "sha256-XcRZ3FoE8G1ZmNUffZfXqHOfm6vQxcGXzjikkF7FM4E=",
+        "lastModified": 1679425495,
+        "narHash": "sha256-0BqOrBVjO0Eme7l46rZRhr2Hg2KUberTXhCI1aTViLk=",
         "owner": "flox",
         "repo": "nixpkgs-flox",
-        "rev": "e7c23cd363e681ee66468912fe8afa3178eb1f42",
+        "rev": "5f34546a6f4a5dc93886385520e9b7c2e96e6a7b",
         "type": "github"
       },
       "original": {
