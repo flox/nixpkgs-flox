@@ -2,6 +2,8 @@ name: "Trigger Update of floxpkgs internal"
 
 on:
   push:
+    branches:
+      - "master"
   workflow_dispatch:
 
 jobs:
