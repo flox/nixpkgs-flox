@@ -20,7 +20,7 @@ jobs:
         with:
           ref: master
           # Pushes made by the action token do not trigger additional actions
-          token: secrets.NIX_GIT_TOKEN
+          token: ${{ secrets.NIX_GIT_TOKEN }}
       - name: "Install nix"
         uses: cachix/install-nix-action@v17
         with:
