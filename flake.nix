@@ -36,15 +36,11 @@
   };
 
   # Capacitor inputs
-  inputs = {
-    flox-floxpkgs = {
-      url = "github:flox/floxpkgs";
-    };
-  };
+  inputs.flox-floxpkgs.url = "github:flox/floxpkgs";
 
   # Clean up of lockfile to re-use entries
   inputs.flox.url = "git+ssh://git@github.com/flox/flox?ref=latest";
-  inputs.flox.inputs.flox-floxpkgs.follows = "flox-floxpkgs";
+  inputs.flox.inputs.nixpkgs-flox.follows = "/";
 
   inputs.flox-floxpkgs.inputs.nixpkgs.follows = "/";
   inputs.flox-floxpkgs.inputs.flox.follows = "flox";
