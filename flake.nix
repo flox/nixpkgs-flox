@@ -35,28 +35,11 @@
     };
   };
 
-  # Capacitor inputs
-  inputs = {
-    flox-floxpkgs = {
-      url = "github:flox/floxpkgs";
-    };
-  };
-
-  # Clean up of lockfile to re-use entries
   inputs.flox.url = "git+ssh://git@github.com/flox/flox?ref=latest";
-  inputs.flox.inputs.flox-floxpkgs.follows = "flox-floxpkgs";
+  inputs.flox.inputs.nixpkgs-flox.follows = "/";
 
-  inputs.flox-floxpkgs.inputs.nixpkgs.follows = "/";
-  inputs.flox-floxpkgs.inputs.flox.follows = "flox";
-  inputs.nixpkgs.follows = "nixpkgs-stable";
-
-  # bug in Nix cannot support three levels of inputs/inputs/inputs/follows
-  inputs.flox-floxpkgs.inputs.capacitor.follows = "capacitor";
-  inputs.capacitor.url = "github:flox/capacitor";
-  inputs.capacitor.inputs.nixpkgs.follows = "nixpkgs";
-
-  outputs = args @ {flox-floxpkgs, ...}:
-    flox-floxpkgs.project args ({
+  outputs = args @ {flox, ...}:
+    flox.project args ({
       self,
       inputs,
       systems,
@@ -70,7 +53,7 @@
           ]
           ++ (builtins.attrValues (builtins.mapAttrs (
               name: catalog:
-                inputs.flox-floxpkgs.plugins.catalog {
+                inputs.flox.plugins.catalog {
                   catalogDirectory = catalog;
                   path = [];
                   # Baked in assumption that __<system> only contains that system
