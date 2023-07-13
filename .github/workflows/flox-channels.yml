@@ -117,7 +117,9 @@ jobs:
         uses: peter-evans/create-or-update-comment@v2
         if: ${{ failure() }}
         with:
-          issue-number: 15
+          repository: flox/product
+          issue-number: 272
+          token: ${{ secrets.NIX_GIT_TOKEN }}
           body: |
             Periodic update has [failed](https://github.com/flox/nixpkgs-flox/actions/runs/${{ github.run_id }}).
 
