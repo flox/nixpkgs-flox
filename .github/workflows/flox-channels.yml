@@ -82,7 +82,7 @@ jobs:
                   git checkout stable
                   git tag stable.$today
                   tags="$tags stable.$today"
-        
+
                   git reset --hard origin/staging
                   branches="$branches stable"
 
@@ -99,7 +99,6 @@ jobs:
               git reset --hard origin/unstable
               branches="$branches staging"
 
-              
               echo '::notice title=Promote Staging::Scheduled update of "staging" channel (unstable->staging)'
               echo '::endgroup::'
 
@@ -110,10 +109,10 @@ jobs:
               git checkout unstable
               git tag unstable.$today
               tags="$tags unstable.$today"
-              
+
               git rebase upstream/nixos-unstable
               branches="$branches unstable"
-              
+
               echo '::notice title=Promote Unstable::Scheduled update of "unstable" channel (rebse onto nixpkgs/nixos-unstable)'
               echo '::endgroup::'
           fi
