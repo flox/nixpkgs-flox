@@ -70,6 +70,7 @@ jobs:
 
           # Running list of tags to be pushed.
           tags=""
+          branches=""
 
           if [ $dow -eq 6 ]
           then
@@ -81,7 +82,9 @@ jobs:
                   git checkout stable
                   git tag stable.$today
                   tags="$tags stable.$today"
+        
                   git reset --hard origin/staging
+                  branches="$branches stable"
 
                   echo '::notice title=Promote Stable::Scheduled update of "stable" channel (staging->stable)'
                   echo '::endgroup::'
@@ -92,7 +95,11 @@ jobs:
               git checkout staging
               git tag staging.$today
               tags="$tags staging.$today"
+              
               git reset --hard origin/unstable
+              branches="$branches staging"
+
+              
               echo '::notice title=Promote Staging::Scheduled update of "staging" channel (unstable->staging)'
               echo '::endgroup::'
 
@@ -103,14 +110,17 @@ jobs:
               git checkout unstable
               git tag unstable.$today
               tags="$tags unstable.$today"
+              
               git rebase upstream/nixos-unstable
+              branches="$branches unstable"
+              
               echo '::notice title=Promote Unstable::Scheduled update of "unstable" channel (rebse onto nixpkgs/nixos-unstable)'
               echo '::endgroup::'
           fi
 
-          echo "::notice title=Summary::New tags: $tags"
+          echo "::notice title=Summary::New tags: $tags\nUpdates Branch(es): $branches"
 
-          git push origin -f --all --atomic  $tags
+          git push origin -f --atomic $branches $tags
 
       - name: Comment on failure
         uses: peter-evans/create-or-update-comment@v2
