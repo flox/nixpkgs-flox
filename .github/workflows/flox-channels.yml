@@ -110,8 +110,7 @@ jobs:
 
           echo "::notice title=Summary::New tags: $tags"
 
-          git push origin $tags
-          git push -f --all
+          git push origin -f --all --atomic  $tags
 
       - name: Comment on failure
         uses: peter-evans/create-or-update-comment@v2
