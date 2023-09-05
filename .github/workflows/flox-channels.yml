@@ -37,7 +37,7 @@ jobs:
     needs: [update-guard]
     if: github.repository_owner == 'flox' && fromJSON(needs.update-guard.outputs.run)
     env:
-      GH_TOKEN: ${{ secrets.NIX_GIT_TOKEN }}
+      GH_TOKEN: ${{ secrets.GIT_TOKEN }}
 
     runs-on: ubuntu-latest
 
