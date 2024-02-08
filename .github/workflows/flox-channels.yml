@@ -63,17 +63,17 @@ jobs:
           function reset_and_tag_branch() {
               local $from_branch=$1; shift
               local $to_branch=$1; shift
-              echo '::group::reset ${from_branch}->${to_branch}'
+              echo "::group::reset ${from_branch}->${to_branch}"
               # Discern the "snapshot date" by inspecting the expected stability
               # tag pointing to the "from" branch.
-              local tag_date=$(git tag --points-at origin/${from_branch} | awk -F. '$1 == "${from_branch}" {print $2; exit}')
-              git checkout ${to_branch}
-              git reset --hard origin/${from_branch}
-              git tag ${to_branch}.${tag_date}
+              local tag_date="$(git tag --points-at origin/${from_branch} | awk -F. '$1 == "'${from_branch}'" {print $2; exit}')"
+              git checkout "${to_branch}"
+              git reset --hard "origin/${from_branch}"
+              git tag "${to_branch}.${tag_date}"
               tags="$tags ${to_branch}.${tag_date}"
               branches="$branches ${to_branch}"
-              echo '::notice title=Promote Stable::Scheduled update of "${to_branch}" channel (${from_branch}->${to_branch})'
-              echo '::endgroup::'
+              echo "::notice title=Promote Stable::Scheduled update of '${to_branch}' channel (${from_branch}->${to_branch})"
+              echo "::endgroup::"
           }
 
           # Day of week (1..7)
@@ -99,14 +99,14 @@ jobs:
           fi
 
           # Every day: rebase latest changes from upstream to unstable branch.
-          echo '::group::rebase against upstream'
+          echo "::group::rebase against upstream"
           git checkout unstable
           git rebase upstream/nixos-unstable
           git tag unstable.$today
           tags="$tags unstable.$today"
           branches="$branches unstable"
-          echo '::notice title=Promote Unstable::Scheduled update of "unstable" channel (rebase onto nixpkgs/nixos-unstable)'
-          echo '::endgroup::'
+          echo "::notice title=Promote Unstable::Scheduled update of 'unstable' channel (rebase onto nixpkgs/nixos-unstable)"
+          echo "::endgroup::"
 
           echo "::notice title=Summary::New tags: $tags\nUpdates Branch(es): $branches"
 
