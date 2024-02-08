@@ -19,18 +19,9 @@ jobs:
       - name: Check whether to update
         id: guard
         run: |
-          dow=$(date +%u)
-
-          # Do nothing on a Thursday, Friday, or Sunday.
-          if [ $dow -eq 4 -o $dow -eq 5 -o $dow -eq 7 ]
-          then
-            echo '::notice title=Skip Update::No update performed on Thursday, Friday, or Sunday'
-            # set empty output so github can read the variable
-            echo "run=false" >> $GITHUB_OUTPUT
-            exit 0
-          fi
-
-          # on any other day set guard to true
+          # We previously only ran on certain days of the week, but now
+          # run every day. Keeping this guard statement as a placeholder
+          # in case we should want to reinstate similar logic in future.
           echo "run=true" >> $GITHUB_OUTPUT
 
   flox-channels:
@@ -65,57 +56,57 @@ jobs:
 
           # Today's date in YYYYMMDD format.
           today=$(date +%Y%m%d)
-          # Day of week (1-7)
-          dow=$(date +%u)
-
           # Running list of tags to be pushed.
           tags=""
           branches=""
 
+          function reset_and_tag_branch() {
+              local $from_branch=$1; shift
+              local $to_branch=$1; shift
+              echo "::group::reset ${from_branch}->${to_branch}"
+              # Discern the "snapshot date" by inspecting the expected stability
+              # tag pointing to the "from" branch.
+              local tag_date="$(git tag --points-at origin/${from_branch} | awk -F. '$1 == "'${from_branch}'" {print $2; exit}')"
+              git checkout "${to_branch}"
+              git reset --hard "origin/${from_branch}"
+              git tag "${to_branch}.${tag_date}"
+              tags="$tags ${to_branch}.${tag_date}"
+              branches="$branches ${to_branch}"
+              echo "::notice title=Promote Stable::Scheduled update of '${to_branch}' channel (${from_branch}->${to_branch})"
+              echo "::endgroup::"
+          }
+
+          # Day of week (1..7)
+          dow=$(date +%u)
           if [ $dow -eq 6 ]
           then
+              # Day of month (01..31)
               dom=$(date +%e)
               if [ $dom -le 7 ]
               then
-                  echo '::group::reset staging->stable'
+                  # Month of year (01..12)
+                  moy=$(date +%m)
+                  if [ $moy -eq 1 -o $moy -eq 7 ]
+                  then
+                      # On first Saturday of January and July, reset stable->lts.
+                      reset_and_tag_branch stable lts
+                  fi
                   # On first Saturday of the month, reset staging->stable.
-                  git checkout stable
-                  git tag stable.$today
-                  tags="$tags stable.$today"
-
-                  git reset --hard origin/staging
-                  branches="$branches stable"
-
-                  echo '::notice title=Promote Stable::Scheduled update of "stable" channel (staging->stable)'
-                  echo '::endgroup::'
+                  reset_and_tag_branch staging stable
               fi
-
               # Every Saturday, reset unstable->staging.
-              echo '::group::reset unstable->staging'
-              git checkout staging
-              git tag staging.$today
-              tags="$tags staging.$today"
-              
-              git reset --hard origin/unstable
-              branches="$branches staging"
-
-              echo '::notice title=Promote Staging::Scheduled update of "staging" channel (unstable->staging)'
-              echo '::endgroup::'
-
-          elif [ $dow -le 3 ]
-          then
-              # Rebase against upstream Monday-Wednesday only.
-              echo '::group::rebase against upstream'
-              git checkout unstable
-              git tag unstable.$today
-              tags="$tags unstable.$today"
-
-              git rebase upstream/nixos-unstable
-              branches="$branches unstable"
-
-              echo '::notice title=Promote Unstable::Scheduled update of "unstable" channel (rebse onto nixpkgs/nixos-unstable)'
-              echo '::endgroup::'
+              reset_and_tag_branch unstable staging
           fi
+
+          # Every day: rebase latest changes from upstream to unstable branch.
+          echo "::group::rebase against upstream"
+          git checkout unstable
+          git rebase upstream/nixos-unstable
+          git tag unstable.$today
+          tags="$tags unstable.$today"
+          branches="$branches unstable"
+          echo "::notice title=Promote Unstable::Scheduled update of 'unstable' channel (rebase onto nixpkgs/nixos-unstable)"
+          echo "::endgroup::"
 
           echo "::notice title=Summary::New tags: $tags\nUpdates Branch(es): $branches"
 
